@@ -1,0 +1,20 @@
+# A setuid binary that connects to port and compares current password with
+# line read. If match, returns the flag.
+
+use:
+2 logins...
+(1) nc -l localhost -p 31337 -c "cat /etc/bandit_pass/bandit20"
+(2) ./suconnect 31337
+
+You create a listening port on localhost which sends the passwd after a
+connection.
+
+But nc closes the connection after the command has bin send.. damn!
+
+
+use:
+cat < /etc/bandit_pass/bandit20 - | nc -l localhost -p 31337
+(cat - means keep reading from stdin)
+
+flag:
+gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr

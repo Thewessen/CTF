@@ -1,0 +1,18 @@
+# Detect port in rang 31000-32000 that uses SSL and doesn't echo.
+
+nmap -sV -p 31000-32000 --script=ssl-heartbleed localhost
+(detects ssl-heartbleed vulnerability on port range)
+
+Two ports come up:
+31790 ssl/unknown
+...   ssl/echo
+
+use:
+openssl s_client localhost:31790
+and paste password
+
+
+flag:
+-----BEGIN RSA PRIVATE KEY-----
+level17.private
+-----END RSA PRIVATE KEY-----

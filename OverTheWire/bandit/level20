@@ -1,0 +1,7 @@
+# Shell script to run command as another user
+
+use:
+./bandit20do cat /etc/bandit_pass/bandit20
+
+flag:
+IbKksEFF4yrVs6il55v6gwY5aVje5f0j

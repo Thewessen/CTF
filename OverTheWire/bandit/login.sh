@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 
-sshpass -p cluFn7wTiGryunymYOu4RcffSxQluehd ssh -l bandit15 -p 2220 bandit.labs.overthewire.org
+sshpass -p gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr ssh -l bandit21 -p 2220 bandit.labs.overthewire.org
 
-# level 14
-# ssh -i level14.private -l bandit14 -p 2220 bandit.labs.overthewire.org
+
+
+
+# level 14, 17
+# ssh -i level17.private -l bandit17 -p 2220 bandit.labs.overthewire.org
 
 
