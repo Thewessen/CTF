@@ -1,0 +1,9 @@
+#Submit the passwrd of bandit14 to localhost port 30000
+#Comment: this is not (perse) a SSH connection, so nc should be used
+
+use:
+cat /etc/bandit_pass/bandit14 | nc localhost 30000
+
+flag:
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+

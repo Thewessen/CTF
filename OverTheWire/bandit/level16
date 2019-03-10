@@ -1,0 +1,13 @@
+#Submit passwd of bandit 15 too localhost:30001 SSL secured
+
+helpful:
+https://www.feistyduck.com/library/openssl-cookbook/online/ch-testing-with-openssl.html
+
+use:
+openssl localhost:30001
+
+submit passwd of bandit 15
+
+flag:
+cluFn7wTiGryunymYOu4RcffSxQluehd
+
