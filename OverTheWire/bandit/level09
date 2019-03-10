@@ -1,0 +1,12 @@
+#Only unique line in data.txt (which is base64 encoded)
+
+
+try:
+cat data.txt | sort -cu
+error: disorder: L0nxAwlfV9V3J5onKIT8KYQ9InTcQ7yE
+
+use:
+cat data.txt | sort | uniq -u
+
+flag:
+UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR

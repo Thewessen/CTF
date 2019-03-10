@@ -1,0 +1,38 @@
+#hexdump of multiple times packed file (9x in total)
+
+use:
+(create dir in /tmp/sthew for creating new files and cd)
+
+xdd -r data.txt > data1.bin
+
+use this script for multiple unpacking (not working yet!):
+
+#!/usr/bin/env bash
+
+mkdir -p ./unpack
+dir="./unpack/"
+file="`ls $dir`"
+echo $file
+
+cd $dir
+if [ -n "`file "$file" | grep -o gzip`" ];then
+        echo "$file is a gzip... unpacking"
+        mv $file "$file.gz"
+        gzip -d "$file.gz"
+        file="`ls`"
+elif [ -n "`file "$file" | grep -o bzip2`" ];then
+        echo "$file is a bzip2... unpacking"
+        bzip2 -d "$file"
+        file="`ls`"
+elif [ -n "`file "$file" | grep -o tar`" ];then
+        echo "$file is a tar... unpacking"
+        tar -xf "$file"
+        rm "$file"
+        file="`ls`"
+else
+        file $file
+fi
+cd ..
+
+flag:
+8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL

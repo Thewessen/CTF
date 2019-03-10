@@ -1,0 +1,7 @@
+#Base64 encoded
+
+use:
+cat data.txt | base64 -d
+
+flag:
+IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR

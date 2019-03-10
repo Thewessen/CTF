@@ -1,0 +1,11 @@
+login with:
+
+ssh -p 2220 -l bandit0 bandit.labs.overthewire.org
+passwrd: bandit0
+
+use:
+cat readme
+
+
+flag:
+boJ9jbbUNNfktd78OOpsqOltutMc3MY1

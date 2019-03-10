@@ -1,0 +1,8 @@
+#changing dir and hidden files
+
+use:
+cd inhere
+cat .hidden
+
+flag:
+pIwrPrtPN36QITSp3EQaw936yaFoFgAB

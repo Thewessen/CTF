@@ -1,0 +1,7 @@
+#Only line with human readable chars starting with some ===-signs
+
+use:
+cat data.txt | strings | grep -E "=+"
+
+flag:
+truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk

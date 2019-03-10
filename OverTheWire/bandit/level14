@@ -1,0 +1,4 @@
+On logging in you get a private key for ssh (see level14.private)
+
+
+Changed the login.sh to use the private.key (-i option)

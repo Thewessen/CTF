@@ -1,0 +1,16 @@
+#inside only human readable file
+#which are dashed filenames
+
+use:
+file ./-(on each file)
+
+better (fancy):
+
+file -- `ls`
+or:
+ls | file -f-
+
+cat ./-file07
+
+flag:
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh
