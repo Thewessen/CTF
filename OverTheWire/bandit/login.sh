@@ -5,6 +5,6 @@ sshpass -p uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG \
   # -t "cd /tmp/tmp.sOrQHW1XdC; bash -l"
 
 # level 14, 17
-# ssh -i level17.private -l bandit17 -p 2220 bandit.labs.overthewire.org
+# ssh -i level26.private -l bandit26 -p 2220 bandit.labs.overthewire.org
 
 
