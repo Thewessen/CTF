@@ -1,0 +1,11 @@
+# Almost the same as lvl 22
+
+use:
+cat /tmp/$(echo I am user $(whoami) | md5sum | cut -d ' ' -f 1)
+
+prob:
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+(nvm this is the current passwd)
+
+flag:
+jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n

