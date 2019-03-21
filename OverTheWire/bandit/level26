@@ -1,0 +1,22 @@
+# The shell for bandit26 is not /bin/bash
+# In bandit25 there is a sshkey for bandit26
+#
+
+The shell logs out immidiatly after displaying BANDIT26 text.
+
+use:
+cat /etc/passwd | grep bandit26
+(...) /usr/bin/showtext
+
+cat /usr/bin/showtext
+(...)
+more ~/text.txt
+exit 0
+
+note: Abuse the more command to trigger (making the terminal window very small!)
+
+press `v` to enter vim
+type :e /etc/bandit_pass/bandit26
+
+flag:
+5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z

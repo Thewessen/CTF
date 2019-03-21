@@ -1,0 +1,7 @@
+# Use git clone to get the passwd
+
+use:
+git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+
+flag:
+0ef186ac70e04ea33b4c1853d2526fa2
