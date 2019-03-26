@@ -1,0 +1,14 @@
+# Clone repository
+# and find the password
+
+use:
+git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+git fetch
+git log
+
+git diff (between two logs)
+
+flag:
+bbc96594b4e001778eee9975372716b2
+
+

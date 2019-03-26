@@ -1,0 +1,16 @@
+# Clone repo
+# and find the password
+
+use:
+Git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+cat README ---> password: < no passwords in production >
+git branch -a
+git checkout remotes/master/dev
+
+cat README.md
+
+flag:
+5b90576bedb2cc04c86a9e924ce42faf
+
+
+
