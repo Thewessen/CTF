@@ -1,0 +1,19 @@
+# Clone repo
+# and find the password
+
+use:
+git clone ssh://bandit30-git@localhost/home/bandit30-git/repo
+
+didnt come up with an answer...
+cat readme.md (... just an empty file)
+git branch -a (... nothing special)
+git log -a (... only initial commit)
+cat ..all-possible-files-in-.git.. (nothing)
+
+though... the file packed-refs had a secret tag in it: /ref/tags/secret
+
+answer:
+git show --name-only secret
+
+flag:
+47e603bb428404d265f59c42920d81e5
