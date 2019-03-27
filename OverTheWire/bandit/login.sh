@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-sshpass -p 56a9bf19c63d650ce78e6ec0354ee45e \
-  ssh -l bandit32 -p 2220 bandit.labs.overthewire.org \
+sshpass -p c9c3199ddf4121b10cf581a98d51caee \
+  ssh -l bandit33 -p 2220 bandit.labs.overthewire.org \
   -t "cd /tmp/tmp.sOrQHW1XdC; bash -l"
 
 # level 14, 17
