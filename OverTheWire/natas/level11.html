@@ -1,0 +1,157 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Level 11</title>
+    <style>
+      code {
+        font-size: 120%;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 11</h1>
+      <a href="http://natas11.natas.labs.overthewire.org/">
+        http://natas11.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas11</li>
+        <li><b>Password:</b> <code>U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK</code></li>
+      </ul>
+      <p>
+        A field to set the background color value. And a link to the
+        sourcecode. The site tells us that cookies are protected with XOR
+        encryption. Nice!
+      </p>
+      <p>
+        In the source-code we can see that happening. On pageload the $data
+        (cookie) is checked for the value 'showpassword' == "yes". If that is
+        the case, it will print the password for the next level. But, as the
+        site tells us, the cookie is encrypted multiple times. But also
+        decrypted to compare the data:
+        json_decode(xor_encrypt(base64_decode($_COOKIE["data"])), true)
+        So lets try and decode our cookie.
+      </p>
+      <p>
+        <h3>Cookies</h3>
+        <ul>
+          <li><b>input:</b>
+            array( "showpassword"=&#62;"no", "bgcolor" =&#62;"#ffffff" )
+          </li>
+          <li><b>cookie:</b>
+            <code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D</code>
+          </li>
+        </ul>
+        <ul>
+          <li><b>input:</b>
+            array( "showpassword"=&#62;"no", "bgcolor" =&#62;"#FFFFFF" )
+          </li>
+          <li><b>cookie:</b>
+            <code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSMX4MNzF%2BaAw%3D</code>
+          </li>
+        </ul>
+        <ul>
+          <li><b>input:</b>
+            array( "showpassword"=&#62;"no", "bgcolor" =&#62;"#373737" )
+          </li>
+          <li><b>cookie:</b>
+            <code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSRA95RkQPaAw%3D</code>
+          </li>
+        </ul>
+        <ul>
+          <li><b>input:</b>
+            array( "showpassword"=&#62;"no", "bgcolor" =&#62;"#676767" )
+          </li>
+          <li><b>cookie:</b>
+            <code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSQQ98RkEPaAw%3D</code>
+          </li>
+        </ul>
+        <ul>
+          <li><b>input:</b>
+            array( "showpassword"=&#62;"no", "bgcolor" =&#62;"#111111" )
+          </li>
+          <li><b>cookie:</b>
+            <code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSRgl7QEYJaAw%3D</code>
+          </li>
+        </ul>
+      </p>
+      <p>
+        <h3>Example process</h3>
+        <ul>
+          <li><code>array( "showpassword"=&#62;"no", "bgcolor"=&#62;"#ffffff")</code></li>
+          <li><b>|| json_encode ||</b></li>
+          <li><code>{"showpassword":"no","bgcolor":"#ffffff"}</code></li>
+          <li><b>?? XOR key ??</b></li>
+          <li><code>UK\"\u001e\u0000H+\u0002\u0004O%\u0003\u0013\u001apS\u0019Wh]UZ-\u0012\u0018T%\u0003U\u0002hR\u0011^,\u0017\u0011^h\u000c</code></li>
+          <li><b>|| base64_dec ||</b></li>
+          <li><code>ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D</code></li>
+        </ul>
+      </p>
+      <p>
+        <h3>Solution</h3>
+        <li>Use JSON-object as input and base64_encoded cookie as output for
+          XOR:
+        </li>
+        <code><li id="first"></li></code>
+        <li></li>
+        <li>Use the recovered key and a crafted JSON-object as input:</li>
+        <code><li id="second"></li></code>
+        <li></li>
+        <li>Set cookie and reload:</li>
+        <code><li>ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK%3D</li></code>
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function find_key() {
+         let input = '{"showpassword":"no","bgcolor":"#ffffff"}',
+             output = atob('ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw'),
+             key = "";
+         for ( let i = 0; i < input.length; i += 1 ) {
+           key += String.fromCharCode(input.charCodeAt(i) ^ output.charCodeAt(i));
+         };
+         console.log( key );
+       }
+
+       function forge_cookie() {
+         console.log("Forging my own cookie!");
+         let key = "qw8J",
+             input = '{"showpassword":"yes","bgcolor":"#ffffff"}',
+             cookie = "";
+         for ( let i = 0; i < input.length; i += 1 ) {
+           cookie += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+         };
+
+         console.log( btoa(cookie) );
+         // include %3D at the end...
+       }
+
+       function autorun() {
+         find_key();
+         forge_cookie();
+         document.getElementById("first").innerHTML = find_key.toString();
+         document.getElementById("second").innerHTML = forge_cookie.toString();
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

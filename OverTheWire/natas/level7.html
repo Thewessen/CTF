@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Level 7</title>
+    <style>
+      code {
+        font-size: 120%;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 7</h1>
+      <a href="http://natas7.natas.labs.overthewire.org/">
+        http://natas7.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas7</li>
+        <li><b>Password:</b> <code>7z3hEENjQtflzgnT29q7wAvMNfZdh0i9</code></li>
+      </ul>
+      <p>
+        Two page link/pages. 'Home' and 'About'.
+        It seems a single page php swap.
+        The URL changes in ..?page=home and ..?page=about.
+      </p>
+      <p>
+        In the source you will find a hint: the password is in
+        /etc/natas_webpass/natas8. So change the page=.. to
+        page=/etc/natas_webpass/natas8.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

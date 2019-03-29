@@ -1,0 +1,64 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Level 9</title>
+    <style>
+      code {
+        font-size: 120%;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 9</h1>
+      <a href="http://natas9.natas.labs.overthewire.org/">
+        http://natas9.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas9</li>
+        <li><b>Password:</b> <code>W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl</code></li>
+      </ul>
+      <p>
+        Search field: find words containing
+        And a view source link
+      </p>
+      <p>
+        In view source, the search string is simply passed through a grep -i
+        with some dictionary.txt. Looking in the dictionary.txt doesn't give us
+        the password for the next level.
+        But we can give more commands, the input is not checked for any
+        arbetrary commands
+      </p>
+      <p>
+        So search for: '""; cat /etc/natas_webpass/natas10'.
+        BTW: cat /etc/natas_webpass/natas11 doesn't give you the password for
+        the next of the next level. Etc.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,10 @@
+# http://natas2.natas.labs.overthewire.org
+# Username: natas2
+
+use:
+url/files
+
+click users.txt
+
+flag:
+sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14

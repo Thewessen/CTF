@@ -1,0 +1,12 @@
+# http://natas3.natas.labs.overthewire.org
+# Username: natas3
+
+use:
+url/robots.txt (ignore options for search engines)
+
+url/s3cr3t
+
+click users.txt
+
+flag:
+Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ

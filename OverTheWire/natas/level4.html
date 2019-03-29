@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Level 4</title>
+    <style>
+      code {
+        font-size: 120%;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Natal level 4</h1>
+      <a href="http://natas4.natas.labs.overthewire.org/">
+        http://natas4.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas4</li>
+        <li><b>Password:</b> <code>Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ</code></li>
+      </ul>
+      <p>
+        Acces denied... You need to come in from
+        http://natas5.natas.labs.overthewire.org/.
+      </p>
+      <p>
+        Javascript isn't working here. 
+        But in the browser, you can easely edit the request header and resent it.
+        Change referer: "http://natas5.natas.labs.overthewire.org/" and resent.
+        Check the response in the dev tools.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq</code></li>
+      </ul>
+    </article>
+<!--  <script type="text/javascript">
+   function autorun()
+   {
+     let xsc = new XMLHttpRequest();
+     xsc.open("GET","http://natas4.natas.labs.overthewire.org",true);
+     xsc.setRequestHeader("referer","http://natas5.natas.labs.overthewire.org");
+     console.log(xsc)
+   }
+   if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+   else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+   else window.onload = autorun;
+</script> -->
+  </body>
+</html>
+
