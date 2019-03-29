@@ -1,0 +1,81 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Level 13</title>
+    <style>
+      code {
+        font-size: 120%;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 13</h1>
+      <a href="http://natas13.natas.labs.overthewire.org/">
+        http://natas13.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas13</li>
+        <li><b>Password:</b> <code>jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY</code></li>
+      </ul>
+      <p>
+        Same as level 12, accept this time the type of the file is actually
+        checkted! No more php-files uploading... or is it?!?
+      </p>
+      <p>
+        After fuzzing around and checking multiple option, I had to google for
+        the answer. Clearly i wasn't seeing somthing right. And I didn't! The
+        file is checked by checking it's MIME-type. This is a simple check of
+        the first couple of bytes of the file. The first couple of bites of an
+        imagesfile needs to be <code>FF D8 FF EE</code>. Check 
+        <a href="https://en.wikipedia.org/wiki/List_of_file_signatures">
+          https://en.wikipedia.org/wiki/List_of_file_signatures
+        </a>
+      </p>
+      <p>
+        We need a scriptinglanguage like Python to set the first couple of
+        bytes of an file. VIM can't do it by default. I guess because of UTF-8
+        encoding of characters. But maybe there is a way.. should check it out.
+        Anyway, use python:
+        <ul>
+          <code>
+          <li>~$ python</li>
+          <li>&#62;&#62;&#62;fh = open('level13.php','w')</li>
+          <li>&#62;&#62;&#62;fh.write('\xFF\xD8\xFF\xEE')</li>
+          <li>&#62;&#62;&#62;fh.write('&#60;? readfile("/etc/natas_webpass/natas14"); ?&#62;')</li>
+          <li>&#62;&#62;&#62;fh.close()</li>
+          </code>
+        </ul>
+      </p>
+      <p>
+        You can check that it looks like an image file by typing <code>file
+        level13.php</code>. The output should be Image ...
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+
