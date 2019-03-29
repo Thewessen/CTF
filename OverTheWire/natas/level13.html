@@ -56,6 +56,30 @@
         </ul>
       </p>
       <p>
+        <b>Edit:</b><br>
+        Ok, I checked some more ways to manipulate the first couple of bytes of
+        a file using my favorite editor: VIM. The command xxd -r is used here.
+        xxd is a command to create and read hexdumps of a file. U can use this
+        command inside vim, or edit data output with vim.
+      </p>
+      <p>
+        First option (vim):
+        <ol>
+          <li>Create a file (file.php) with vim and add some text.</li>
+          <li>Use <code>xxd file.php | vim -</code></li>
+          <li>Edit the first couple of bytes. Delete the rest of the line</li>
+          <li>In vim, type <code>:%!xxd -r &#62; test.php</code></li>
+          <li>Close and check.</li>
+        </ol>
+      </p>
+      <p>
+        Second option:
+        <ol>
+          <li><code>echo "00000000: ffd8 ffee" | xxd -r &#62; test.php</code></li>
+          <li><code>vim test.php</code></li>
+        </ol>
+      </p>
+      <p>
         You can check that it looks like an image file by typing <code>file
         level13.php</code>. The output should be Image ...
       </p>
