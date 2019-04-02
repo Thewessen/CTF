@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 15</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 15</h1>
+      <a href="http://natas15.natas.labs.overthewire.org/">
+        http://natas15.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas15</li>
+        <li><b>Password:</b> <code>AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J</code></li>
+      </ul>
+      <p>
+        Oke, a simple 'check if user exists' field that does what it says.
+        Check if an user exists in the database. No output from the database,
+        and no SQL-injection for of yet. The username <code>natas16</code>
+        excists.
+      </p>
+      <p>
+        After poking around, and learning alot about SQL injection, I came up
+        with a plan to check if the password contains a char. The code I used:
+        <code>natas16" and mid(username,1,1)='n'#</code> returns 'this user
+        exsits'! So this would be a way to check for the password character by
+        character. But still... so much checks are needed.
+      </p>
+      <p>
+        I also found a solution for the previous level were the person used
+        '...&amp;debug' in the url. This was what I tried, but didn't work. But
+        after trying again, it did work! I simply had the '?username=..' wrong
+        :(
+      </p>
+      <p>
+        I can't find a way to automate searching for the password... When I use
+        Javascript, I get much complains about the browsers crossorigin policy.
+        Also when I attempt a request, the browser refreshes, so I lose all my
+        data in the console. It's anoying all those protections from the
+        browser.  So I'm going to google for the solution once more...
+      </p>
+      <p>
+        Someone else is using a Python script for the httprequests. It looks
+        realy realy nice, and bruteforces the password. I also learned a
+        different check in MySQL: <code>password LIKE BINARY %t%</code>. It
+        means the password contains a 't' char. Just what I needed. So awesome!
+        I admid copy pasting the code, like a script kiddy ; )
+      </p>
+      <p>
+        Look at natas15.py for the Python script.
+      </p>
+      <h3>EDIT</h3>
+      <p>
+        Oke, I couldn't stand being a script-kiddy. And, though I want to learn
+        Python, it's not my prefered language for solving. After searching for
+        more solutions, they all seem to use Python. The idea is that you want
+        to not use a browser, because of the cross-origin issue. But then,
+        suddenly, I had an idea: why not use nodejs!
+      </p>
+      <p>
+        Check out the script I wrote for nodejs. It uses two libraries: require
+        and request. I borowed some idea's of the solution I have seen on the
+        internet: first filter for the characters that are being used in the
+        password and after that, search for the password itself. The problem I
+        had to overcome is that request uses a callback function, and is
+        thereby asynchronic.
+      </p>
+      <p>
+        Look at natas15.js for the ES6-script.
+      </p>
+      <p>
+        <ul>
+          <li>Usage:</li>
+          <li><code>$: nodejs</code></li>
+          <li><code>&#62; .load natas15.js</code></li>
+        </ul>
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>WaIHEacj63wnNIBROHeqi3p9t0m5nhmh</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

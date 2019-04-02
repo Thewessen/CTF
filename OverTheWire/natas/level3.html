@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 3</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 3</h1>
+      <a href="http://natas3.natas.labs.overthewire.org/">
+        http://natas3.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas3</li>
+        <li><b>Password:</b> <code>sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14</code></li>
+      </ul>
+      <p>
+        By looking at the source code: "not even google can find the flag"!
+        That's interesting. There should be a file on the server called
+        robots.txt, which is used to hide files from search crawler engines.
+        And there is: 
+        <a href="http://natas3.natas.labs.overthewire.org/robots.txt">
+          http://natas3.natas.labs.overthewire.org/robots.txt
+        </a>. This leads to an other folder, s3cr3t:
+        <a href="http://natas3.natas.labs.overthewire.org/s3cr3t">
+          http://natas3.natas.labs.overthewire.org/s3cr3t
+        </a>. Click users.txt and the flag should be there.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

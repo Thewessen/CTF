@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 14</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 14</h1>
+      <a href="http://natas14.natas.labs.overthewire.org/">
+        http://natas14.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas14</li>
+        <li><b>Password:</b> <code>Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1</code></li>
+      </ul>
+      <p>
+        Username:... and Password:... profided. Looks like I need to get my
+        first SQL-injection :)
+      </p>
+      <p>
+        Looking at the source, the site is using MySQL. So I should search the
+        internet for that. The input of the field is not checked. And the
+        query is as simple as: <code>SELECT * from users where username="" and
+        password="";</code>.
+      </p>
+      <p>
+        On the internet I found an MySQL-injection cheat sheet. I search for a
+        linecomment, and found the #-char works. So i made the username:
+        <code>natas15"#</code>. Making the query look like this:
+      </p>
+      <p>
+        <code>SELECT * from users where username="natas15"</code>
+        <span style="color:#999;"># and password="";</span>
+      </p>
+      <p>
+        Acces granted!
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+
