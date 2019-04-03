@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 23</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 23</h1>
+      <a href="http://natas23.natas.labs.overthewire.org/">
+        http://natas23.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas23</li>
+        <li><b>Password:</b> <code>D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE</code></li>
+      </ul>
+      <p>
+        The site contains a password field where you can enter a password.
+        Guessed right, the credentials for the next level are there. Looking at
+        the source (there is a 'view source' link) I can see that the password
+        should contain the word <code>iloveyou</code> and is between 10 and 20
+        characters long. Easy right??
+      </p>
+      <p>
+        Before I dive into an exausting bruteforce algorithm, lets see if I can
+        be a bit smarter this time. Let's search the internet for password
+        dictionaries.
+      </p>
+      <p>
+        WoW! Like complete github repo's are commited to password dictionaries.
+        One github has multiple dictionaries, some of which are more than 140MB
+        large! That's insane! Clicking through some interesting files I found a
+        file called 'twitter-banned.txt'. In it there was the password
+        'iloveyou', mmm.... maybe a combination of two of thoose words?
+        Let's try and make a script using this dictionary and combining the
+        words.
+      </p>
+      <p>
+        HAHA this is soooo funny. My script is running for hours doing great
+        testing all possible passwords.. I was just poking around, trying to
+        optimize my script and check if I could find a bypass in the source
+        code. So far my script was unlucky... Then in the sourcecode I saw a
+        comment <code style="color:gray"># /10111</code>. Wich is ofcourse 23
+        in decimals. So I tried <code>23iloveyou</code> and BAM!! While my
+        script is bruteforcing for hours I got the solution by hand xD. So
+        funny!
+      </p>
+      <p>
+        After writing the script a bit more i found that the password
+        <code>11iloveyou</code> should also work. Actually every number
+        preceding 'iloveyou' will work as a login x D
+      </p>
+      <p>
+        Looking at a solution on the internet I get it way every integer works
+        here. In the source it states <code>$passwd &#62; 10</code>. I thouged
+        it was the length of the string. But it is actually any integer
+        preceding the string. So 11iloveyou works, iloveyou11 doesn't, and so
+        on. Given a 
+        <a href='http://stackoverflow.com/questions/672040/comparing-string-to-integer-gives-strange-results' noreferer>
+          peculiarity</a> in the way PHP handles strings.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>OsRmXFguozKpTZZ5X14zNO43379LZveg</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

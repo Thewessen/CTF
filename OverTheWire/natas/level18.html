@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 18</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 18</h1>
+      <a href="http://natas18.natas.labs.overthewire.org/">
+        http://natas18.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas18</li>
+        <li><b>Password:</b> <code>xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP</code></li>
+      </ul>
+      <p>
+        Oke, so you need to login as admin... mmm. Basic MySQL-injection don't
+        work here. Looking at the source, there is actually no query. It is a
+        simple php-SESSION.
+      </p>
+      <p>
+        It get's more stranger. The function to set the
+        <code>$_SESSION["admin"]</code> too 1 is commented out for being to
+        'unsafe'. Damn! Otherwise, only the username had to be 'admin' to be
+        logged in as admin. But this time we need to set the
+        <code>["admin"]</code> ourselfs? How should we do that?
+      </p>
+      <p>
+        Oke, after messing around a bit I stumbled on a part of the solution.
+        The <code>PHPSESSID</code>. This bit of code is added in the request
+        cookie. And would probably tell the browser our current session id.
+        Maybe if we had an other id, we would be able to log in as admin?
+      </p>
+      <p>
+        After googling how to set a header cookie in a Python-script (yes, I'm
+        beginning to LOVE Python), I wrote a short python-script to try out all
+        the different <code>PHPSESSID</code> between 1 and 640. The source code
+        actually tells us the max is 640 id's. The script is called natas18.py.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

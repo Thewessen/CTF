@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 22</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 22</h1>
+      <a href="http://natas22.natas.labs.overthewire.org/">
+        http://natas22.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas22</li>
+        <li><b>Password:</b> <code>chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ</code></li>
+      </ul>
+      <p>
+        A blank page with just a 'view-source' link. Looking at the source it
+        prints the credentials whenever a key 'revelio' is in the request. But!
+        We need to be admin to actually view the response. The
+        <code>header("Location: /")</code> redirects us to the root url
+        whenever we are not admin... Damn!
+      </p>
+      <p>
+        Oke... I googled, yet again. It seems actually possible to view the
+        response <b>before</b> the site gets redirected. In python you can view
+        the <code>request.history</code> too view all the redirection that are
+        done. And even do like <code>request.history[0].text</code> to view the
+        body of the first response before the redirect. Awesome!
+      </p>
+      <p>
+        Now grabbing the flag was easy! Just craft a GET request with the
+        'revelio' key, and view the history of the response.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

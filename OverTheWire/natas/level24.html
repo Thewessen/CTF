@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 24</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 24</h1>
+      <a href="http://natas24.natas.labs.overthewire.org/">
+        http://natas24.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas24</li>
+        <li><b>Password:</b> <code>OsRmXFguozKpTZZ5X14zNO43379LZveg</code></li>
+      </ul>
+      <p>
+        Oke, it looks the same as the previous level, natas23. You get one
+        inputfield for a password. And if you have the correct password, you
+        get the credentials. Easy right?? Lucky for me I still have my find all
+        password scripts created in the natas23. In the sourcecode we can see
+        that this time, the password is checked using <code>strcmp()</code>
+        with a censored string. That string should be the correct password. The
+        string can't be more than 20 characters long, but no restriction more
+        than that.
+      </p>
+      <p>
+        After completing and fireing up my 'find all passwords'-script
+        (passwdhack.py), I wonderd why the sourcecode actually did
+        <code>!strcmp()</code> the check if the password was <b>correct</b>.
+        That made no sense for me. So I started googling about
+        <code>strcmp()</code> and stumbled on a realy great short 
+        <a href='https://marcosvalle.github.io/ctf/php/2016/05/12/php-comparison-vlun.html' noreferer>
+          article
+        </a>
+        . It tells you that <code>strcmp()</code> itself isn't safe! When
+        comparing a string with an array, it result in 0 (which means true)! So
+        all we have to do is make our password an array, and the password
+        should be correct!
+      </p>
+      <p>
+        While writing this my Python script still didn't find the password. So
+        let's try and craft a string. I found this url exploit to work: 
+        <a href='http://natas24.natas.labs.overthewire.org/index.php?passwd[]=works'>
+          http://natas24.natas.labs.overthewire.org/index.php?passwd[]=works</a>
+      </p>
+      <p>
+        Also the natas24.py script works. Yes, I'm becoming a Python fanboy :)
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>GHF6X7YwACaYYssHVY05cFq83hRktl4c</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

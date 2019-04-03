@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 20</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 20</h1>
+      <a href="http://natas20.natas.labs.overthewire.org/">
+        http://natas20.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas20</li>
+        <li><b>Password:</b> <code>eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF</code></li>
+      </ul>
+      <p>
+        Another 'login as admin to reseive the password' challanges. But this
+        time it seems more complex. We can look at it's source code, so let's
+        start there.
+      </p>
+      <p>
+        Oke the source is a bit messy. Let's just start analysing some cookies.
+        The cookies are all scrambled, and uniq!! There is no cookie the same,
+        no matter what name you use. Almost 4000 unique cookies, damn! The
+        whole alphabet is used including the digits, and they are all 26 chars
+        in size. No uppercase though, giving us
+        <code>36^26=2,909812599×10<sup>40</sup></code> possebilities! Should be
+        easy xD
+      </p>
+      <p>
+        This is what the script does (evaluating the debug):
+        <ol>
+          <li>calls <code>myread()</code></li>
+          <li>check if sid (cookie) contains only <code>'1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-'</code></li>
+          <li>check if file excists</li>
+          <li>filename <code>/var/lib/php5/sessions//mysess_92sista4kb35rj9kofljj703g3(cookie)</code></li>
+          <li>if it does, it destroys the data in the file and creates the excisting session</li>
+          <li><b>Actually, login in with the same cookie the file never excists</b>
+          <li>else it creates a new session</li>
+          <li>calls <code>mywrite()</code></li>
+          <li>check if sid (cookie) contains only <code>'1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-'</code></li>
+          <li>filename <code>/var/lib/php5/sessions//mysess_92sista4kb35rj9kofljj703g3(cookie)</code></li>
+          <li>data is <code>name|s:7:"natas20"</code> (serialized version of SESSION)</li>
+          <li><code>$data += "$key $value\n"</code></li>
+          <li><code>$key=name</code></li>
+          <li><code>$value=natas20</code></li>
+        </ol>
+      </p>
+      <p>
+        Other name gives us a different serialized SESSION:
+        <ul>
+          <li>data is <code>name|s:<b>5</b>:"admin"</code> (serialized version of SESSION)</li>
+          <li><code>$key=name</code></li>
+          <li><code>$value=admin</code></li>
+        </ul>
+      </p>
+      <p>
+        Succesfully logged in as admin, when: <code>array_key_exists("admin",
+          $_SESSION) and $_SESSION["admin"] == 1</code>.
+      </p>
+      <p>
+        Setting a cookie too 'admin' actually saves a file as
+        <code>/var/lib/php5/sessions//mysess_admin</code> xD
+      </p>
+      <p>
+        Oke, after looking for the solution, I still can't get it... You need
+        to save a file with the session and the session should contain two
+        line, ak. two key value pairs. It should look like this:
+        <ul>
+          <li>name admin</li>
+          <li>admin 1</li>
+        </ul>
+      </p>
+      <p>
+        The exploit is actually in writing the file. There is no check that the
+        name contains illigal characters. So you can fill the namefield with
+        'admin\nadmin 1'. And this value gets processed just like we want it
+        too.
+      </p>
+      <p>
+        The fact that i couldn't get the same session i was in, was because the
+        difference between 'get' and 'post'. I was always using a 'post' in my
+        requests with python.. So there is always a new post and a new
+        session?!? Still don't get it fully, but the steps you need to take are
+        as follows:
+        <ol>
+          <li>make post request with <code>cookies={'name':'admin\nadmin 1'}</code></li>
+          <li>use a custom cookie, like 'umphack'</li>
+          <li>Now the session should be stored in a file</li>
+          <li>Make a GET request with the same cookie</li>
+        </ol>
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>IFekPyrQXftziDEsUr3x21sYuahypdgJ</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

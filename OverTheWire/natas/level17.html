@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 17</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 17</h1>
+      <a href="http://natas17.natas.labs.overthewire.org/">
+        http://natas17.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas17</li>
+        <li><b>Password:</b> <code>8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw</code></li>
+      </ul>
+      <p>
+        It looks like the same level as natas15. Even the sourcecode looks the
+        same. There is one major exception. All the echo's for natas15 are
+        commented out. So you don't get any response from the query?? What is
+        this?!? You won't know if what you entered exists, doesn't exists or is
+        simply bad code... This site is definitly useless. Still need to find
+        the password though.
+      </p>
+      <p>
+        Damn!! Looks like another SQL-injection, but without feedback?? I
+        thoughed i could manipulate the <code>&amp;debug</code> query... And
+        yeah, I'm able to pop an alertbox with the &#60;script&#62;-tag inside
+        the username. But reading a file server-side with javascript on the
+        client-sied. That's impossible!
+      </p>
+      <p>
+        Oke, I took a peak at a solution on the internet. And that solution
+        reminded me af the SQL-injection cheatsheet if bin reading... You can
+        set a timeout on the execution of the database-query by adding
+        <code>and sleep(5)</code> to the query. Now you can actually time the
+        response of the query! Awesome! I know what I had to do.
+      </p>
+      <p>
+        The actual script was pretty simple. I used the natas15.py script and
+        modified it, adding the <code>and sleep(0.2)</code> at the end. I also
+        googled for a way to time the response. Imported a module called
+        <code>time</code> and used: <code>start = time.time()</code> and
+        <code>end = time.time()</code> to measure the timing of the response.
+        Easy!
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

@@ -18,15 +18,43 @@
         <li><b>Username:</b> natas16</li>
         <li><b>Password:</b> <code>WaIHEacj63wnNIBROHeqi3p9t0m5nhmh</code></li>
       </ul>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+      <p>
+        Just like level 9 and level 10, search a dictionary using grep. Only
+        this time the search field is really secured. Some more illegal
+        characters are added: <code>[;|&amp;`\'"]</code>. And the search is
+        captured in double-quotes (""). So adding option to the <code>grep
+          -i</code> won't work anymore.
+      </p>
+      <p>
+        My understanding is that we can still using something like
+        <code>$(...)</code> to get some subshell execution. This means we can
+        still search the password file for some letters: <code>$(grep -O a
+          /etc/natas_webpass/natas17)</code>. But this letter is always also
+        search in the dictionary. Lucky for us the dictionary has all the
+        letters. So we get some response if we are on the right track.
+      </p>
+      <p>
+        Oke, it was as simple as updating my natas15.js file. These are the
+        instructions I used to check if the password contains a letter:
+        <ol>
+          <li><code>char = '0123456789abc...etc'</code> (the alphabet)</li>
+          <li><code>needle=$(grep ${char} /etc/natas_webpass/natas17)</code></li>
+          <li>if a letter is found in the flag, the output should be empty (because the flag is not in the dictionary)</li>
+          <li><code>needle=$(grep -E ^${pass}${char} /etc/natas_webpass/natas17)</code></li>
+          <li>this checks if the first couple of chars are the same as the flag.</li>
+          <li>DONE!</li>
+        </ol>
+      </p>
+      <p>
+        I also update the natas15.py to natas16.py. Just to check if it has the
+        same output. And Python is faster and more neath then Javascript ; )
+      </p>
+      <p>
+        Check natas16.js and/or natas16.py for the source code.
+      </p>
       <ul>
         <li>Next level password:</li>
-        <li><code></code></li>
+        <li><code>8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw</code></li>
       </ul>
     </article>
     <script type="text/javascript">

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 21</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 21</h1>
+      <a href="http://natas21.natas.labs.overthewire.org/">
+        http://natas21.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas21</li>
+        <li><b>Password:</b> <code>IFekPyrQXftziDEsUr3x21sYuahypdgJc</code></li>
+      </ul>
+      <p>
+        The site contains a link to an other site, stating that this site is
+        colocated with:
+        <a href="http://natas21-experimenter.natas.labs.overthewire.org/">
+          http://natas21-experimenter.natas.labs.overthewire.org/
+        </a>
+        . Other than a 'view-source' link and a link to the colocated site. The
+        site doesn't contain much. In the source, we see the
+        <code>print_credentials()</code> we already familiar with. Let's look
+        at the other site.
+      </p>
+      <p>
+        There is much more on the other site. We see a 'Hello World' div that
+        we can mark up with some css-styles input: align, font-size and
+        background-color. There is also a 'view-source' link. In the source,
+        the current session is updated with the key/value pairs of the post
+        request. And that's it, another post request. I hope a colocated site
+        uses the same session and thereby the same cookie. Let's try.
+      </p>
+      <p>
+        The steps I took:
+        <ol>
+          <li>Send POST request:</li>
+          <li><code>url='http://natas21-experimenter.natas.labs.overthewire.org/'</code></li>
+          <li><code>data={...,'admin' : '1'}</code></li>
+          <li><code>cookies={'PHPSESSID': 'umphack'}</code></li>
+          <li>Send GET request:</li>
+          <li><code>url='http://natas21-experimenter.natas.labs.overthewire.org/'</code></li>
+          <li><code>cookies={'PHPSESSID': 'umphack'}</code></li>
+        </ol>
+      </p>
+      <p>
+        And we are admin!
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

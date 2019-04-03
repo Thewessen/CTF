@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 19</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 19</h1>
+      <a href="http://natas19.natas.labs.overthewire.org/">
+        http://natas19.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas19</li>
+        <li><b>Password:</b> <code>4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs</code></li>
+      </ul>
+      <p>
+        So this is basically the same as natas18. There is no
+        'view-source'-link. The site states that the source code is almost the
+        same as natas18, accept that the PHPSESSID is not in order. Viewing the
+        PHPSESSID in the browser, this cookie is also very long!
+      </p>
+      <p>
+        I started by grabbing some different session-cookies and analysing
+        them. Logging into the browser didn't work for me, because the cookie
+        is stored, and you need to keep reseting. An automated Python
+        script is much nicer anyway.
+      </p>
+      <p>
+        The cookie consist of 21 chars, ranging from 0 to f (probably hex).
+        Bruteforcing them is simply to large. But there should be a pattern!
+        Let's analyse some session cookies.
+      </p>
+      <p>
+        Look at the lines commented out in the natas19.py script. It basically
+        forges a request and print the cookie. I had the script run like
+        1000 (x2) times and piped all the output into a file. I used vim to
+        clean up the file, sort it, and removed duplicates (yes there were).
+        And noticed a pattern in the cookie: <code>3 range(1,63430)
+        2d6e617461733139</code>. The first digit and the last part of the
+        string are the same for every session. Still much possebilities, but lets
+        try and bruteforce this, using almost the same Python script as
+        natas18.py.
+      </p>
+      <p>
+        No luck! The script ran for almost half on hour, but no admin-login
+        popup... damn! Maybe the last part of the cookie is actually telling
+        I'm not admin. And yes, when changing the data='username' key to admin,
+        the last chars of the cookie change: <code>2d61646d696e</code>. But
+        still no luck bruteforcing the cookie with this new tail. NO WAY!! The
+        script just needed like 30 minutes more :D. The PHPSESSID that did the
+        trick: <code>3238312d61646d696e</code>! So cool.
+      </p>
+      <p>
+        Some extra notes about the cookie (while waiting for the script):
+        Only the username key changes the tail of the cookie. The first digit
+        is (until now) unchanged. Actually, the head of the cookie always
+        contains 2, or 4, or 6 digits, in pairs of <code>3# 3# 3#</code>, where
+        <code>#=range(0,9)</code>. This should have bin much faster too
+        bruteforce xD. Let's addapt the script a bit and try again.
+      </p>
+      <p>
+        The script is optimized and super fast.. But I already had the flag!
+        <b>edit</b>: After looking at some solutions, i found an even nicer
+        Python script that uses the <code>.encode('hex')</code> method. With
+        this method it is easier too loop over a range of interger (you don't
+        have to add the 3's statically). Should have thouged of it myself! In
+        the third paragraph i stated: 'probably hex' xD Addepted the script and
+        it's even faster now.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code>eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF</code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+
