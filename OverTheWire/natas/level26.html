@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 26</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 26</h1>
+      <a href="http://natas26.natas.labs.overthewire.org/">
+        http://natas26.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas26</li>
+        <li><b>Password:</b> <code>oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T</code></li>
+      </ul>
+      <p>
+        This site let's you draw a line, how awesome! There are four input
+        fields where you can enter the coords x1, x2, y1, y2 resp. A button
+        DRAW let's you draw a line. A black screen like block appears with the
+        dimensions of your line. Awesome! Submitting more dimensions creates
+        more lines in the image. The image now consists of multiple lines.
+        There is also a 'view-source' link.
+      </p>
+      <p>
+        On the first line the source states: "Sorry, this is ugly as hell",
+        mmm... The code consists of some small functions, let's go through it 
+        from input to output visa versa:
+      </p>
+      <h4>On request</h4>
+      <ul>
+        <li><code>$_COOKIE["drawing"]</code> exists OR <code>$_GET["x1",...,"y2"]</code> exists</li>
+        <li><code>$imgfile="img/natas26_"+session_id()+".png"</code></li>
+        <li><code>drawImage($imgfile)</code></li>
+        <li><code>showImage($imgfile)</code></li>
+        <li><code>storeData()</code></li>
+      </ul>
+      <h4><code>drawImage($filename)</code></h4>
+      <ul>
+        <code>
+        <li>$img=imagecreatetrueculor(400,300);</li>
+        <li>drawFromUserdata($img);</li>
+        <li>imagepng($img,$filename);</li>     
+        <li>imagedestroy($img);</li>
+        </code>
+      </ul>
+      <h4><code>drawFromUserdata($img)</code></h4>
+      <i>(heavely shortend)</i>
+      <ul>
+        <code>
+        <li>if( array_key_exists("x1..y2", $_GET) OR array_key_exists("drawing", $_COOKIE)</li>
+        <li>$color=imagecolorallocate($img,0xff,0x12,0x1c);</li>
+        <li>imageline($img,"x1", "y1","x2", "y2", $color);</li>
+        </code>
+      </ul>
+      <h4><code>showImage($filename)</code></h4>
+      <ul><code>
+        <li>if(file_exists($filename))</li>
+        <li>echo "&#60;img src=\"$filename\"&#62;";</li>
+      </code></ul>
+      <h4><code>storeData()</code></h4>
+      <i>(shortend a bit)</i>
+      <ul><code>
+        <li>$new_object=array();</li>
+        <li>if(array_key_exists("x1..y2",$_GET)</li>
+        <li>$new_object=$_GET;</li>
+        <li></li>
+        <li>if (array_key_exists("drawing", $_COOKIE)){</li>
+        <li>$drawing=unserialize(base64_decode($_COOKIE["drawing"]));</li>
+        <li>else</li>
+        <li>$drawing=array();</li>
+        <li></li>
+        <li>$drawing[]=$new_object;</li>
+        <li>setcookie("drawing",base64_encode(serialize($drawing)));</li>
+      </code></ul>
+      So the data is stored as a cookie, base64 encoded.
+      <h4>Cookie</h4>
+      Decoding my just created cookie gives me: 
+      <ul>
+        <li><i>read: x1="20" x2="20" y1="40" y2="40"</i></li>
+<li><code>"a:1:{i:0;a:4:{s:2:\"x1\";s:2:\"20\";s:2:\"y1\";s:2:\"20\";s:2:\"x2\";s:2:\"40\";s:2:\"y2\";s:2:\"40\";}}"</code></li>
+        <li>Multiple lines give a bigger cookie. Notice that 7 lines are
+          created:</li>
+<li><code>"a:7:{i:0;a:4:{s:2:\"x1\";s:2:\"20\";s:2:\"y1\";s:2:\"20\";s:2:\"x2\";s:2:\"40\";s:2:\"y2\";s:2:\"40\";}i:1;a:4:{s:2:\"x1\";s:2:\"20\";s:2:\"y1\";s:2:\"20\";s:2:\"x2\";s:2:\"40\";s:2:\"y2\";s:2:\"40\";}i:2;a:4:{s:2:\"x1\";s:2:\"20\";s:2:\"y1\";s:2:\"20\";s:2:\"x2\";s:2:\"40\";s:2:\"y2\";s:2:\"40\";}i:3;a:4:{s:2:\"x1\";s:2:\"20\";s:2:\"y1\";s:2:\"20\";s:2:\"x2\";s:2:\"40\";s:2:\"y2\";s:2:\"40\";}i:4;a:4:{s:2:\"x1\";s:2:\"10\";s:2:\"y1\";s:2:\"10\";s:2:\"x2\";s:2:\"10\";s:2:\"y2\";s:2:\"10\";}i:5;a:4:{s:2:\"x1\";s:2:\"50\";s:2:\"y1\";s:2:\"50\";s:2:\"x2\";s:2:\"50\";s:2:\"y2\";s:2:\"50\";}i:6;a:4:{s:2:\"x1\";s:3:\"150\";s:2:\"y1\";s:1:\"0\";s:2:\"x2\";s:1:\"0\";s:2:\"y2\";s:3:\"150\";}}"</code></li>
+      </ul>
+      <h4><code>class Logger</code></h4>
+      <p>
+        There is also a class called Logger. But I can't see it called
+        anywhere.. Don't know yet what to think of it.
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code></code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+

