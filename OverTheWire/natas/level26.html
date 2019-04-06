@@ -33,8 +33,8 @@
       </p>
       <h4>On request</h4>
       <ul>
-        <li><code>$_COOKIE["drawing"]</code> exists OR <code>$_GET["x1",...,"y2"]</code> exists</li>
-        <li><code>$imgfile="img/natas26_"+session_id()+".png"</code></li>
+        <li><code><span class="user-input">$_COOKIE["drawing"]</span></code> exists OR <code><span class="user-input">$_GET["x1",...,"y2"]</span></code> exists</li>
+        <li><code>$imgfile="img/natas26_"+<span class="user-input">session_id()</span>+".png"</code></li>
         <li><code>drawImage($imgfile)</code></li>
         <li><code>showImage($imgfile)</code></li>
         <li><code>storeData()</code></li>
@@ -52,7 +52,7 @@
       <i>(heavely shortend)</i>
       <ul>
         <code>
-        <li>if( array_key_exists("x1..y2", $_GET) OR array_key_exists("drawing", $_COOKIE)</li>
+        <li>if( array_key_exists(<span class="user-input">"x1..y2", $_GET</span>) OR array_key_exists(<span class="user-input">"drawing", $_COOKIE</span>)</li>
         <li>$color=imagecolorallocate($img,0xff,0x12,0x1c);</li>
         <li>imageline($img,"x1", "y1","x2", "y2", $color);</li>
         </code>
@@ -70,7 +70,7 @@
         <li>$new_object=$_GET;</li>
         <li></li>
         <li>if (array_key_exists("drawing", $_COOKIE)){</li>
-        <li>$drawing=unserialize(base64_decode($_COOKIE["drawing"]));</li>
+        <li>$drawing=unserialize(base64_decode(<span class="user-input">$_COOKIE["drawing"]</span>));</li>
         <li>else</li>
         <li>$drawing=array();</li>
         <li></li>
@@ -92,9 +92,20 @@
         There is also a class called Logger. But I can't see it called
         anywhere.. Don't know yet what to think of it.
       </p>
+      <p>
+        Oke, I had to google for the solution : ( Here is a nice one:<br>
+        <a href='https://n0j.github.io/2017/07/19/otw-natas-26.html' rel="noreferrer">
+          https://n0j.github.io/2017/07/19/otw-natas-26.html</a><br>
+        And here is some aditional reading:<br>
+        <a href='https://www.owasp.org/index.php/PHP_Object_Injection' rel="noreferrer">
+          https://www.owasp.org/index.php/PHP_Object_Injection</a><br>
+        After reading this a lot, I stil can't get my head around why the f*
+        the logger object in the cookie get's executed by the Logger class in
+        the source-code. A very strange bug...
+      </p>
       <ul>
         <li>Next level password:</li>
-        <li><code></code></li>
+        <li><code>55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ</code></li>
       </ul>
     </article>
     <script type="text/javascript">

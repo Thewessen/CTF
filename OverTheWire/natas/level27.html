@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 27</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 27</h1>
+      <a href="http://natas27.natas.labs.overthewire.org/">
+        http://natas27.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas27</li>
+        <li><b>Password:</b> <code>55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ</code></li>
+      </ul>
+      <p>
+        This looks like another MySQL injection. You get a webpage with a
+        username and password input. If you type in a username, the site
+        responds with, "new user created". When you type in the same username
+        (and the same password), the page responds with "Welcome ... Here is
+        you data: username =&gt; ... and password =&gt; ...". When you type
+        in the username natas28, the page responds with "Wrong password". There
+        is also a 'view-source' link. 
+      </p>
+      <p>
+        The source looks more complicated. There is a comment stating the
+        database is cleared every 5 minutes. Should be enough...
+      </p>
+      <p>
+        The most important function in the source is as follows:
+        <ol>
+          <li><code>if $_REQUEST["username"] and
+                     $_RQUEST["password"]</code><br>
+              connect to database
+            <ol>
+              <li>if validUser( username )
+                <ol>
+                  <li>
+                    if <code>checkCredentials( username , password )</code><br>
+                    Welcome ... <code>dumpDate( username )</code>
+                  </li>
+                  <li>     
+                    else<br>
+                    Wrong password for <code>htmlentities( username )</code>
+                  </li>
+                </ol>
+              </li>
+              <li>else<br>
+                <code>createUser( username, password )</code>
+                User was created
+              </li>
+            </ol>
+          <li>else<br>
+            <code>html-form</code>
+          </li>
+        </ol>
+      </p>
+      <p>
+        Maybe overflowing the database user input is a thing?? MySQL trunks a
+        username when it's more than 65535 characters long. It get's created,
+        but the lookup username will fail because the username is trunked??
+        Have a look at 
+        <a href='https://kitctf.de/writeups/gits2015/aart' rel="noreferrer">
+        this</a>. Trying out the respons, which is not realy the response of
+        the database, I can get a max of 16364 characters as usernames. Otherway
+        the site won't even accept my get request... But! The site always
+        responds with 'user created'... Can't log in with the same username. So
+        maybe trunk is a thing here?<br>
+        <b>edit:</b> Have proof that a password get's trunked too 64 chars.
+        This means, if a password is <code>"A"*64+"B"</code> the password
+        becomes <code>"A"*64</code>. It is the same for the username, tested!
+      </p>
+      <p>
+        Trying different attack vectors, like the <b><code>mysql_real_escape_string()</code></b>. A
+        good read: <a
+         href="https://www.adampalmer.me/iodigitalsec/2013/08/18/mysql_real_escape_string-wont-magically-solve-your-sql-injection-problems/"
+         rel="noreferrer">
+          read</a> And a more 
+        <a
+         href="https://www.adampalmer.me/iodigitalsec/2013/08/13/mysql-root-to-system-root-with-udf-for-windows-and-linux/"
+         rel="noreferrer">
+        escalating attack
+        </a>
+        from this attack, gaining system root from
+        MySQL root privilidge.
+      </p>
+      <p>
+        Searching for another CTF involving the
+        <code><b>mysql_real_escape_string()</b></code>, I came accros an
+        <a
+        href='https://nullnews.in/multibyte-sql-injection-bypasses-mysql-real-escape-string-and-addslashes-protection/'
+         rel='noreferrer'>
+        article
+        </a>
+        for MySQL injections using different which utilizes different
+        char encodings called 'multibyte' injections. Thoug, when trying, it
+        didn't work the same for me. Probably because of the single-quotes
+        surrounding the query.
+      </p>
+      <p>
+        Oke, after making a drawing and re-reading all the links I posted, I
+        migth be on too something here. Defenitly the <code>%bf'</code> trick
+        does something, although not what I would expect. For example, if
+        <code>username=natas27</code> and <code>password=%bf'</code>. A new
+        user 'natas27' is created. But the password is not empty! Trying the
+        same password again gives a log in, but no array with data?!? That's so
+        strange to me. Also the multibyte injection only seems to work an
+        params send, not on data send, both POST and GET methods. And you need
+        to make a params string in Python first, otherwise the
+        <code>'%'</code>-sign gets escaped as <code>%25</code>.
+      </p>
+      <p>
+        Let's review the input <span class='user-input'>
+          username=natas27&amp;password=%bf'</span>. Lets asume <code>'%bf'' -&gt;
+          '%bf%27' -&gt; '%bf%5c%27 -&gt; '?'</code>, where '?' is a special
+        character:
+        <ul>
+          <li>valid?</li>
+          <li>
+            <code>
+              SELECT * from users where username=<span class='user-input'>'natas27'</span>
+            </code>
+          </li>
+          <li>create user</li>
+          <li>
+            <code>
+              INSERT INTO users (username, password) values 
+              ('<span class='user-input'>natas27</span>','<span class='user-input'>?'</span>')
+            </code>
+          </li>
+          <li>credentials?</li>
+          <li>
+            <code>
+              SELECT username froom users where 
+              username='<span class='user-input'>natas27</span>' and password='<span class='user-input'>?'</span>'
+            </code>
+          </li>
+          <li>dump data</li>
+          <li>
+            <code>SELECT * from users where 
+              username='<span class='user-input'>natas27</span>'
+            </code>
+          </li>
+        </ul>
+      </p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code></code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+
