@@ -10,6 +10,10 @@ password = 'JWwR438wkgTsNKBbcJoowyysdM82YjeF'
 query = {'query' :
         'd"'}
 
+# Create a username natas28 with 64 trailing spaces, the 1 gets trunked and the
+# spaces trimed
+Data = {'username' : "natas28" + " "*64 + "1",'password' : "1"}
+
 chars = ''.join([string.digits, string.ascii_letters])
 
 Data = {'query' : "b"}
