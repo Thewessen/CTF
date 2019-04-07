@@ -148,9 +148,38 @@
           </li>
         </ul>
       </p>
+      <p>
+        Oke, we can't get anywhere. Yes 'we', because Bart was here to help me
+        out. I would have really thoughed we could solve this level together.
+        We spend hours brainfarting about the <code>%bf</code> special &iquote; character.
+        At the end of the day, we figured out it was not the database that
+        returned no data... It was that an empty user gets inserted. HTML
+        doesn't recognize the <code>%bf</code> character (only the 
+        <code>%2c%bf</code> character). That way the REQUEST crashes, and an
+        <i>empty</i> user is inserted. We didn't had more time to think about
+        an other solution. Lucky for us Google did know one.
+      </p>
+      <p>
+        The solution reallies lies in the trunking 64chars input of the
+        database. And the fact that, when a user is inserted in the database,
+        the input string get trimmed. This way we can created another user
+        <i>natas28</i> with our own password. On the creadentials check, our
+        query is check. But because the <code>fetch_asoc()</code> is called
+        only on the username, the first entry with username natas28 is
+        returned (which is ofcourse the 'real' natas28 user).
+      </p>
+      <p>
+        Step by step:
+        <ol>
+          <li>Post new user with <code>username=natas28 + " "*64 + '1'</code>
+            and <code>password=1</code></li>
+          <li>Another request with <code>username=natas28</code> and
+            <code>password=1</code></li>
+        </ol>
+      </p>
       <ul>
         <li>Next level password:</li>
-        <li><code></code></li>
+        <li><code>JWwR438wkgTsNKBbcJoowyysdM82YjeF</code></li>
       </ul>
     </article>
     <script type="text/javascript">
