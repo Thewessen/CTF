@@ -1,0 +1,14 @@
+# login in at leviathan.labs.overthewire.org
+# port 2223
+# A binary 'check' is used to check a password we don't know
+
+use:
+string check
+some interesting text: sex love god secret
+try sex
+you get a shell
+whoami: leviathan2
+cat /etc/leviathan_pass/leviathan2
+
+flag:
+ougahZi8Ta

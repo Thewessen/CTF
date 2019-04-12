@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Level 28</title>
+  </head>
+  <body>
+    <header>
+      <h1>Natas level 28</h1>
+      <a href="http://natas28.natas.labs.overthewire.org/">
+        http://natas28.natas.labs.overthewire.org/
+      </a>
+    </header>
+    <article>
+      <ul>
+        <li><b>Username:</b> natas28</li>
+        <li><b>Password:</b> <code>JWwR438wkgTsNKBbcJoowyysdM82YjeF</code></li>
+      </ul>
+      <p>
+        <b>Whack Computer Joke Database</b> is the title of our next challenge.
+        You get a searchfield where you can enter a postrequest. Then the
+        database(?) is searched and you get max three jokes corresponding to
+        your search. Awesome! There is NO SOURCE code available?!? damn.
+      </p>
+      <p>
+        When playing around, asking for some jokes and laughing, I had several
+        ideas:
+        <ol>
+          <li>Is it a simple <code>grep -i</code> inside a dictionary</li>
+          <li>Is it really a database request?</li>
+          <li>Can we somehow check the two?</li>
+        </ol>
+        All my grep ideas failed, and I had to asume it was a database request.
+        Although none of my inline comment or %bf' seemed to work. Darn...
+      </p>
+      <p>
+        Then I saw a redirection taken place on submit. You start at index.php
+        with a simple query, like query=a. Than you get redirected too
+        search.php where the query changes too something big. In this expamle:
+        <code>query=G%2BglEae6W%2F1XjA7vRm21nNyEco%2Fc%2BJ2TdR0Qp8dcjPKriAqPE2%2B%2BuYlniRMkobB1vfoQVOxoUVz5bypVRFkZR5BPSyq%2FLC12hqpypTFRyXA%3D</code>
+        I know this from level 11. It looks almost the same, accept bigger.
+        So a base64 string? On entering a different query for the search.php,
+        say query=a, you get an "Incorrect amount of PKCS#7 padding for
+        blocksize" response. Defenitly encoding is taking place. When searching
+        the internet, all I could find is AES...
+      </p>
+      <p>
+        I started to analyse more input with a simple python script and
+        realized only the query somewhere in the mid is changed. The rest stays
+        the same. There should be more data in the query send to search.php
+        then the data you submit using the form... Now I'm working on decoding
+        this big data string.
+      </p>
+      <p>
+        There must be some key in use... But if it is, we can only extract it
+        if we know the input and output. 
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <ul>
+        <li>Next level password:</li>
+        <li><code></code></li>
+      </ul>
+    </article>
+    <script type="text/javascript">
+       function autorun() {
+       }
+
+       if (document.addEventListener) {
+         document.addEventListener("DOMContentLoaded", autorun, false);
+       } else if (document.attachEvent) {
+         document.attachEvent("onreadystatechange", autorun);
+       } else {
+         window.onload = autorun;
+       }
+    </script>
+  </body>
+</html>
+
