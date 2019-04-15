@@ -1,0 +1,11 @@
+# We get a level3 program
+# On run it asks for a password
+# After which we get a shell
+
+use:
+run the program with ltrace
+strcmp is called on 'printfl' 
+Which is the password for the program
+
+flag:
+vuH0coox6m

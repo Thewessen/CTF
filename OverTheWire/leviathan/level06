@@ -1,0 +1,8 @@
+# Another program
+# This time it reads a file /tmp/file.log
+
+use:
+Create a symbolic link to /etc/leviathan_pass/leviathan6 in /tmp/file.log
+
+flag:
+UgaoFee4li

@@ -1,0 +1,10 @@
+# Another program
+# This time the program asks for a 4-digit pin
+
+use:
+I created a bruteforce method
+
+for i in `seq 0000 9999`; do echo $i; tmp=`/home/leviathan6/leviathan6 $i`; if [[ "$tmp" -ne "Wrong" ]]; then echo $tmp; break; fi; done
+
+flag:
+ahy7MaeBo9

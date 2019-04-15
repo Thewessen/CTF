@@ -1,0 +1,9 @@
+# Use this string as a password for the connection
+# S1JZUFRPTklTR1JFQVQ=
+# it's base64 encoded
+
+use:
+S1JZUFRPTklTR1JFQVQ= | base64 -d
+
+flag:
+
