@@ -3,7 +3,7 @@
 # it's base64 encoded
 
 use:
-S1JZUFRPTklTR1JFQVQ= | base64 -d
+echo S1JZUFRPTklTR1JFQVQ= | base64 -d
 
 flag:
-
+KRYPTONISGREAT
