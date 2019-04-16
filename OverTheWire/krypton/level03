@@ -1,0 +1,37 @@
+# Need to find a new cipher key
+# The hint is you need to use a occurence analesys
+
+use:
+
+count=1
+c=A
+chars=chars=$(cat found1 | sed --expression="s/ //g" | sed --expression="s/[A-Z]/\0\n/g" | sort)
+for char in $chars; do if [ "$char" == "$c" ]; then count=$(expr $count + 1); else echo "$c => $count"; c=$char; count=1; fi; done
+
+found1          found2          found3      total
+A => 21         A => 27         A => 10     58
+B => 87         B => 129        B => 30     246
+C => 107        C => 86         C => 34     227
+D => 69         D => 119        D => 22     210
+E => 17         E => 34         E => 13     64
+F => 11         F => 12         F => 5      28
+G => 81         G => 111        G => 35     227
+H => 2          H => 2          H => 0
+I => 2          I => 14         I => 3
+J => 102        J => 158        J => 41
+K => 25         K => 30         K => 12
+L => 27         L => 27         L => 6
+M => 29         M => 45         M => 12
+N => 74         N => 135        N => 31
+O => 7          O => 3          O => 2
+P => 0          P => 1          P => 1
+Q => 106        Q => 186        Q => 48
+R => 1          R => 2          R => 1
+S => 155        S => 243        S => 58
+T => 32         T => 37         T => 6
+U => 100        U => 130        U => 27
+V => 56         V => 53         V => 21
+W => 47         W => 66         W => 16
+X => 29         X => 33         X => 9
+Y => 42         Y => 33         Y => 9
+Z => 57         Z => 59         Z => 16
