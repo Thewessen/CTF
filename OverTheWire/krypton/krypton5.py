@@ -60,21 +60,36 @@ def freq( string, substr, result=[] ):
     freq( string[i+1:], substr, result )
     return result
 
-def block_freq( string, size=1, shift=True ):
-    non_white = "".join(string.split())
-    diction = {}
-    if shift:
-        blocks = [non_white[i:i+size] for i in range(0,len(non_white)-size,1)]
-    else:
-        blocks = group( non_white, size )
+def block_freq( data, size=1, shift=True ):
+    def do_freq( string ):
+        non_white = "".join(string.split())
+        diction = {}
+        if shift:
+            blocks = [non_white[i:i+size] for i in range(0,len(non_white)-size,1)]
+        else:
+            blocks = group( non_white, size )
 
-    for sub in blocks:
-        if sub not in diction:
-            diction[sub] = freq( non_white, sub, [] )
-    return diction
+        for sub in blocks:
+            if sub not in diction:
+                diction[sub] = freq( non_white, sub, [] )
+        return diction
 
-def freq_analyses( string, size=1, shift=True ):
-    diction = block_freq( string, size, shift )
+    dictio = {}
+    if type( data ) is list:
+        for string in data:
+            temp = do_freq( string )
+            for k in temp:
+                if k in dictio:
+                    dictio[k] += temp[k]
+                    dictio[k].sort()
+                else:
+                    dictio[k] = temp[k]
+    elif type( data ) is str:
+        dictio = do_freq( data )
+    return dictio
+
+def freq_analyses( data, size=1, shift=True ):
+    diction = block_freq( data, size, shift )
     total = 0
     data = []
     sortdict = sorted(diction.items(),key=lambda kv: len(kv[1]),reverse=True)
@@ -142,15 +157,19 @@ def vineger_decipher( string, key):
     string = "".join(string.split())
     result = ''
     for i in range( len(string) ):
-        result += rot( string[i], ord(key[i % len(key)]) - 64)
+        k = key[i % len(key)]
+        if k == '-':
+            result += '-'
+        else:
+            result += rot( string[i], 26 - (ord(k) - 65) )
     return result
 
-lettrs = block_analyses( found1, 4 )
-for n in lettrs:
-    chars = lettrs[n]
-    analyses = freq_analyses( "".join(chars) )
-    print "letter" + str(int(n) + 1) + " in block"
-    print column_print( analyses, ["letter","occur","indice"], 5 )
+# lettrs = block_analyses( found1, 4 )
+# for n in lettrs:
+#     chars = lettrs[n]
+#     analyses = freq_analyses( "".join(chars) )
+#     print "letter" + str(int(n) + 1) + " in block"
+#     print column_print( analyses, ["letter","occur","indice"], 5 )
 
 # head = [ "substring", "occurence", "indices" ]
 # print "found1:"
@@ -163,9 +182,84 @@ for n in lettrs:
 # data3 = freq_analyses( found3, 3 )
 # column_print( data3, head )
 # print "total:"
-# total = freq_analyses( found1 + found2 + found3, 3 )
-# column_print( total, head, 20 )
+# total = freq_analyses( [found1,found2,found3], 3 )
+# column_print( total, head, 10 )
 
-# print "possible key-lengths:" 
-# keylengths = calc_poss_keylength( [found1, found2, found3], [t[0] for t in total[1:4]])
-# print keylengths
+def print_poss_keylengths():
+    print "possible key-lengths:" 
+    keylengths = calc_poss_keylength( [found1, found2, found3], [t[0] for t in total[1:4]])
+    print keylengths
+
+def score_english( string ):
+    # f = open("dictionary.txt")
+    # words = f.read()
+    # words = words.split('\n')
+    # f.close()
+    words = ['THE','AND','THA','ENT','ION','TIO','FOR','NDE','HAS','NCE','EDT','TIS','OFT','STH','MEN']
+    score = 0
+    # multiple = len(string) / (len(string) - string.count('-')) 
+    for word in words:
+        if word in string:
+            score+=string.count(word)
+    return score
+    # return score * multiple
+
+def convert_to_key( data, ii, oo, length ):
+    blocks = []
+    keys = []
+    for string in data:
+        blocks += group( string, length )
+    for b in blocks:
+        if ii in b:
+            key = ''
+            start = b.index(ii)
+            for i in range(start):
+                key += '-'
+            for j in range(len(ii)):
+                key += chr((ord(oo[j]) - ord(ii[j]) - 1) % 26 + 65)
+            for k in range(start+len(ii),length):
+                key += '-'
+            if key not in keys:
+                keys.append(key)
+    return keys
+
+def try_find_key( data ):
+    # Find frequent occuring 3-blocks
+    freq_an = freq_analyses( data, 3 )
+    common_encr = [e[0] for e in freq_an[:15]]
+    keylengths = calc_poss_keylength( data, [t[0] for t in freq_an[1:4]])
+    common_words = ['THE','AND','THA','ENT','ION','TIO','FOR','NDE','HAS','NCE','EDT','TIS','OFT','STH','MEN']
+    poss_keys = []
+    for n in keylengths[:4]:
+        for e in common_encr:
+            for w in common_words:
+                poss_keys += convert_to_key( data, e, w, n )
+    keys = set(poss_keys)
+    for k in keys:
+        score1 = score_english( vineger_decipher( found1, k ) )
+        score2 = score_english( vineger_decipher( found2, k ) )
+        score3 = score_english( vineger_decipher( found3, k ) )
+        tsc = score1 + score2 + score3
+        if tsc > 9:
+            print "'%s' total score: " % k + str(tsc)
+            print "found1 score: %s -------------------" % str(score1)
+            print vineger_decipher( found1, k ) 
+            # print "found2 score: " + str(score2)
+            print vineger_decipher( found2, k ) 
+            # print "found3 score: " + str(score3)
+            print vineger_decipher( found3, k ) 
+
+print vineger_decipher( krypton, "KEYLENGTH" )
+# print "".join(found2.split())
+# try_find_key( [found1,found2,found3] )
+# ZAL -> THE => TGS
+# DLC -> THE => PVB * 8-length
+# blocks = group( found3, 4)
+# for b in blocks:
+#     if "ZAL" in b:
+#         print b
+
+# print_three_block_freq()
+# key = "TGSPVD"
+# print vineger_decipher( found1, key)
+# print vineger_decipher( found2, key)

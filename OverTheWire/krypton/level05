@@ -4,9 +4,19 @@
 # Frequency analysis can break a known key length as well.  Lets try one
 # last polyalphabetic cipher, but this time the key length is unknown.
 
-great article:
-https://inventwithpython.com/hacking/chapter21.html
+# great article:
+# https://inventwithpython.com/hacking/chapter21.html
 
 checkout:
 krypton5.py
+
+My script didn't work as planned, so I used a tool on the internet:
+https://www.dcode.fr/vigenere-cipher
+
+One of the problems with my script is that it's a DEcipher, so you need to rotate BACK xD (fixed)
+Another problem is that the tool on the internet gave different possible keylengths?!? And the first one (9) was the correct one.
+I would have never found the password this way....
+
+flag:
+RANDOM
 
