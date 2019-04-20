@@ -35,6 +35,19 @@ found3 = "FIPJS EJXYV CYYHZ KMOYH GNEYN XSYSI PHJOM OKLYY HBTXH MLIYI RGGKK PMFH
 # The password for next level
 krypton = "BELOS Z"
 
+def group( string, number ):
+    string = "".join(string.split())
+    return [string[i:i+number] for i in range(0,len(string),number)]
+        
+def rot(char, rotate):
+    nr = ord(char)
+    if nr > 64 and nr < 91:
+        nr -= 65
+        nr += rotate
+        nr %= 26
+        nr += 65
+    return chr(nr)
+
 def freq( string, substr, result=[] ):
     try:
         i = string.index(substr)
@@ -47,22 +60,13 @@ def freq( string, substr, result=[] ):
     freq( string[i+1:], substr, result )
     return result
 
-def rot(char, rotate):
-    nr = ord(char)
-    if nr > 64 and nr < 91:
-        nr -= 65
-        nr += rotate
-        nr %= 26
-        nr += 65
-    return chr(nr)
-
 def block_freq( string, size=1, shift=True ):
     non_white = "".join(string.split())
     diction = {}
     if shift:
         blocks = [non_white[i:i+size] for i in range(0,len(non_white)-size,1)]
     else:
-        blocks = [non_white[i:i+size] for i in range(0,len(non_white),size)]
+        blocks = group( non_white, size )
 
     for sub in blocks:
         if sub not in diction:
@@ -71,34 +75,97 @@ def block_freq( string, size=1, shift=True ):
 
 def freq_analyses( string, size=1, shift=True ):
     diction = block_freq( string, size, shift )
-    data = [ [ 
-              "substring",
-              "occurence",
-              "indices" 
-           ] ]
     total = 0
+    data = []
     sortdict = sorted(diction.items(),key=lambda kv: len(kv[1]),reverse=True)
     for a in sortdict:
         data.append([str(a[0]),str(len(a[1])),str(a[1])])
         total += len(a[1])
     return data
 
-def column_print( data, nr_of_rows=10 ):
+def calc_factors( integer ):
+    fract = []
+    if integer < 2:
+        return fract
+    for i in range(2,integer/2+1):
+        if( integer % i == 0 ):
+            fract.append( i )
+    return fract
+
+def calc_poss_keylength( strings, substrs ):
+    diffs = []
+    factors = []
+    result = []
+    for string in strings:
+        for substr in substrs:
+            f = freq( "".join(string.split()), substr )
+            diffs += [f[i+1] - f[i] - 1 for i in range(0,len(f)-1,2)]
+        for d in diffs:
+            factors += calc_factors( d )
+
+    result = sorted( set(factors), 
+                     key=lambda k: factors.count(k),
+                     reverse=True )
+    return result
+
+def compare_english( string ):
+    ENG_ALPH = 'ETAOINSRHLDCUMFPGWYBVKXJQZ'
+    string = "".join(string.split())
+    orderd = sorted( set( string ),
+                     key=lambda k: string.count(k),
+                     reverse=True )
+    print orderd
+    score = 0
+    for i in range(len(orderd)):
+        if orderd[i] == ENG_ALPH[i]:
+            score += 1
+    return score
+
+def column_print( data, head=[], nr_of_rows=10 ):
+    if len(head) != 0:
+        data = [head] + data
     column_width = max(len(attr) for row in data for attr in row[:-1]) + 2
     for row in data[:nr_of_rows+1]:
         print "".join(attr.ljust(column_width) for attr in row)
 
-print "found1:"
-data1 = freq_analyses( found1, 3 ) 
-column_print( data1 )
-print "found2:"
-data2 = freq_analyses( found2, 3 ) 
-column_print( data2 )
-print "found3:"
-data3 = freq_analyses( found3, 3 )
-column_print( data3 )
-print "total:"
-total = freq_analyses( found1 + found2 + found3, 3 )
-column_print( total, 20 )
-# column_print( data1[:1] + sorted(data1[1:] + data2[1:] + data3[1:], key=lambda k: int(k[1]),reverse=True), 30)
+def block_analyses( string, number ):
+    blocks = group( string, number )
+    letters = {}
+    for i in range(number):
+        letters[i] = []
+    for block in blocks:
+        for i in range(len(block)):
+            letters[i].append(block[i])
+    return letters
 
+def vineger_decipher( string, key):
+    string = "".join(string.split())
+    result = ''
+    for i in range( len(string) ):
+        result += rot( string[i], ord(key[i % len(key)]) - 64)
+    return result
+
+lettrs = block_analyses( found1, 4 )
+for n in lettrs:
+    chars = lettrs[n]
+    analyses = freq_analyses( "".join(chars) )
+    print "letter" + str(int(n) + 1) + " in block"
+    print column_print( analyses, ["letter","occur","indice"], 5 )
+
+# head = [ "substring", "occurence", "indices" ]
+# print "found1:"
+# data1 = freq_analyses( found1, 3 ) 
+# column_print( data1, head )
+# print "found2:"
+# data2 = freq_analyses( found2, 3 ) 
+# column_print( data2, head )
+# print "found3:"
+# data3 = freq_analyses( found3, 3 )
+# column_print( data3, head )
+# print "total:"
+# total = freq_analyses( found1 + found2 + found3, 3 )
+# column_print( total, head, 20 )
+
+# print "possible key-lengths:" 
+# keylengths = calc_poss_keylength( [found1, found2, found3], [t[0] for t in total[1:4]])
+# print keylengths
