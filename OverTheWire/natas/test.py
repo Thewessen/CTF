@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import requests, string
+import base64
 from requests.auth import HTTPBasicAuth
+from urllib.parse import unquote
 
 uri = 'http://natas28.natas.labs.overthewire.org/index.php'
 username = 'natas28'
@@ -9,19 +11,21 @@ password = 'JWwR438wkgTsNKBbcJoowyysdM82YjeF'
 
 # chars = ''.join([string.digits, string.ascii_letters])
 
-Data = {'query' : 'b',
-        'user' : 'admin'}
+for i in range(32):
+    Data = {'query' : 'A'*i + 'B' * (i+4)}
 
-params = '&'.join(['%s=%s' % (k, v) for k, v in Data.items()])
-print(params)
-# for i in chars:
-# query = {'query' : i}
-p = requests.get( uri,
-    auth=HTTPBasicAuth(username, password),
-    # data = Data)
-    params = params)
-print( '\n'.join( p.text.split('\r\n')[24:]) + '\n\n' )
-# print( p.url.split('=')[1] )
+    # params = '&'.join(['%s=%s' % (k, v) for k, v in Data.items()])
+    # for i in chars:
+    # query = {'query' : i}
+    p = requests.post( uri,
+        auth=HTTPBasicAuth(username, password),
+        # data = Data)
+        params = Data)
+    # print( '\n'.join( p.text.split('\r\n')[24:]) + '\n\n' )
+    # print( unquote(p.url.split('=')[1]) )
+    resp = p.url.split("query=")[1]
+    print( len(base64.b64decode(unquote(resp).encode('utf8'))) )
+    print( len(base64.b64decode(unquote(resp))) )
 
 # f = open('./query.txt')
 # lines = [line.rstrip('\n') for line in f]
