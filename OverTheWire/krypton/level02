@@ -1,0 +1,13 @@
+# Another Ceaser encrypted file
+# This time you get a encryption program
+# To help you decrypt??
+
+use:
+I didn't get the program, and wrote my own
+
+for i in `seq 1 26`; do cat /krypton/krypton2/krypton3 | tr 'A-Z' "${t:$i:1}-ZA-${t:$i-1:1}"; done
+
+It simlpy runs all possible ceaser rotation on the krypton3 file
+
+flag:
+CAESARISEASY

@@ -1,0 +1,10 @@
+# All files are in /krypton/
+# We need the file krypton2
+# It's is rot13 encoded
+
+use:
+cd /krypton/krypton1
+cat krypton2 | tr 'A-Z' 'N-ZA-M'
+
+flag:
+LEVEL TWO PASSWORD ROTTEN

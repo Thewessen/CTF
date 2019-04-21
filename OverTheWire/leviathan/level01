@@ -1,0 +1,12 @@
+# login in at leviathan.labs.overthewire.org
+# port 2223
+# username leviathan0
+# password leviathan0
+
+use:
+ls -al
+cd .backup
+grep pass bookmarks.html
+
+flag:
+rioGegei8m
