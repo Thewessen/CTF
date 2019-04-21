@@ -28,6 +28,12 @@
 # (great article)
 # https://inventwithpython.com/hacking/chapter21.html
 
+import string as st
+# .ascii_uppercase
+import numpy as np
+# .mean
+# .std (standard deviation)
+
 # found text
 found1 = "SXULW GNXIO WRZJG OFLCM RHEFZ ALGSP DXBLM PWIQT XJGLA RIYRI BLPPC HMXMG CTZDL CLKRU YMYSJ TWUTX ZCMRH EFZAL OTMNL BLULV MCQMG CTZDL CPTBI AVPML NVRJN SSXWT XJGLA RIQPE FUGVP PGRLG OMDKW RSIFK TZYRM QHNXD UOWQT XJGLA RIQAV VTZVP LMAIV ZPHCX FPAVT MLBSD OIFVT PBACS EQKOL BCRSM AMULP SPPYF CXOKH LZXUO GNLID ZVRAL DOACC INREN YMLRH VXXJD XMSIN BXUGI UPVRG ESQSG YKQOK LMXRS IBZAL BAYJM AYAVB XRSIC KKPYH ULWFU YHBPG VIGNX WBIQP RGVXY SSBEL NZLVW IMQMG YGVSW GPWGG NARSP TXVKL PXWGD XRJHU SXQMI VTZYO GCTZR JYVBK MZHBX YVBIT TPVTM OOWSA IERTA SZCOI TXXLY JAZQC GKPCS LZRYE MOOVC HIEKT RSREH MGNTS KVEPN NCTUN EOFIR TPPDL YAPNO GMKGC ZRGNX ARVMY IBLXU QPYYH GNXYO ACCIN QBUQA GELNR TYQIH LANTW HAYCP RJOMO KJYTV SGVLY RRSIG NKVXI MQJEG GJOML MSGNV VERRC MRYBA GEQNP RGKLB XFLRP XRZDE JESGN XSYVB DSSZA LCXYE ICXXZ OVTPW BLEVK ZCDEA JYPCL CDXUG MARML RWVTZ LXIPL PJKKL CIREP RJYVB ITPVV ZPHCX FPCRG KVPSS CPBXW VXIRS SHYTU NWCGI ANNUN VCOEA JLLFI LECSO OLCTG CMGAT SBITP PNZBV XWUPV RIHUM IBPHG UXUQP YYHNZ MOKXD LZBAK LNTCC MBJTZ KXRSM FSKZC SSELP UMARE BCIPK GAVCY EXNOG LNLCC JVBXH XHRHI AZBLD LZWIF YXKLM PELQG RVPAF ZQNVK VZLCE MPVKP FERPM AZALV MDPKH GKKCL YOLRX TSNIB ELRYN IVMKP ECVXH BELNI OETUX SSYGV TZARE RLVEG GNOQC YXFCX YOQYO ISUKA RIQHE YRHDS REFTB LEVXH MYEAJ PLCXK TRFZX YOZCY XUKVV MOJLR RMAVC XFLHO KXUVE GOSAR RHBSS YHQUS LXSDJ INXLH PXCCV NVIPX KMFXV ZLTOW QLKRY TZDLC DTVXB ACSDE LVYOL BCWPE ERTZD TYDXF AILBR YEYEG ESIHC QMPOX UDMLZ VVMBU KPGEC EGIWO HMFXG NXPBW KPVRS XZCEE PWVTM OOIYC XURRV BHCCS SKOLX XQSEQ RTAOP WNSZK MVDLC PRTRB ZRGPZ AAGGK ZIMAP RLKVW EAZRT XXZCS DMVVZ BZRWS MNRIM ZSRYX IEOVH GLGNL FZKHX KCESE KEHDI FLZRV KVFIB XSEKB TZSPE EAZMV DLCSY ZGGYK GCELN TTUIG MXQHT BJKXG ZRFEX ABIAP MIKWA RVMFK UGGFY JRSIP NBJUI LDSSZ ALMSA VPNTX IBSMO"
 found2 = "GLCYX UKFHS PEZXF AVJOW QQYYR RAYHM GIEOG ARIAZ YEYXV PXFPJ BXXUY SLELR NXHNH PLARX TADLC CSLGE NOSPR IUUML VSNPR RJMOO GMLGU JHVBE QSMFI NZDSK HEFNX KSHGE AVZAZ YQCQP BAKPC LMQGR XXTYR WQSEG FHSPH ZYETX FPVMX PBTWV XMLHM AZXYG EQLRN IAPOZ CXIAZ MVMSL RVNZN SKXCL RNJOL XXSCS HYMYK ZCWPR XNWYR ZJXUG MASQC ELRXX DKWMY PLUGL KHTPR GAKVE WRCEI KESOV JPJGH XJYRE CEGAE HDIBQ SEZAL DAMZX UKKZR EBMIR TLLDH MHRNZ MOOMP CIFVX JDMTP VBGWZ SHCOI FZBUK XGZRF ZALWM JOIJE BUCMB PSSZA LMSYN LJOMO SXQOE ZVTUN HGCXL YMYKA GEWQO LHQIC LFYKL TOPJL RQOMZ YFQNY EOMFG EQCEG NXYVM IPEYG KNOVB ZKXKG UOPKC PBXKF DLCAE FYXUQ IPDLN QBUQL GXWRR YVEXM QMGOG JREGY WBLLA BEULX NTZSO SDDLN MZFGV YATRX YSKTN TRTNT AKRBX YQJRS OKQHE FXTAR IPWMX KTSKV EPVFU KAYJB ZKGNX YOAGW POKTW KGIPX GUVHV EGDXB SHYBS UOVNC XYIIQ DMEOY ARIUP EGNXY RSJOW NTWAR IUTRQ YXACX MWIEG USOJY TVGNX ASHCH MYRLL BZCAV RZMFX MAPPL GMHLS SEXJU BUDLC LJGKK UYSLD MEHXK CMPTW UGESX SRRSG UULNX GWPAO ZODFS EMJGG AKFCO VBUFH XHYME EHXYK RBELR TUYOE IQEFZ LPBCC DWVXM OKXUL CFOKP PCMFT YKTZO WFZAP UGJYV BRIAZ ELWEL DZNRB ZOELO LBZPH DIPES PUGJY VBAYY RHMPK CYXYK FHXWZ ZSGYB UMSLN SEJRV EAGWP SOGKK JGYIF KTJYE JQMEK LPBJC EGUHT YLIPE SPUGJ YVBDX VXTIY YRELR XXUYA DZVPU GJYVB ELRIH UMSPO FRJVO KQZPV OKBUQ EJHEL YTZCM EYIQZ HHZEQ DIAMX YLCRS IZGBS KRBAE FYXUQ IPDFL ZALWE GWFRO GNKPU LCFNX HFMJJ AEGIW OHSAJ EUFOO EBESS UHADL CCSBS AHNXF PSQJB UDIPP WGLHY DLCPW GGUSS WFXIA ZHMDL CCSLG ENOSP RIGNT AKPRS SHMAI EXMYI XOGKY JKLRJ GLZOI LESTU BUDSG EEYRD PXHQL RQBTY SIRTI FUYTO RALQR UNAYJ GEGBT LLAYC YXYET UYXFP VQXTD OVYYH GCHWY VRPVF GGKCI TPVNR FHSHQ LRQZA LVELO PNJRD OVCLP YRHPD IPTRT HRHMG GOIAZ TAFEP TSHYI VSRRD SSZAL BSYOF RZPLO RRSIP UGJYV BLRQZ ALMSD QIRXH VWAFP RNMXU DPCXE AUYZS BRJJB XFHVP WOVRY LLNML LFEUP UCYGE SSIEV DLCDT EKMAI ACWPJ UKULY RGIEE PLVPI PTGCB ARPYC KRYJB KVCNY SLLHX HJLVT KYSKT QESGN XWYGI PXFVT ZCIBL PBTZV XLGDA NEMVR MQMVR GDMKW R"
@@ -35,10 +41,58 @@ found3 = "FIPJS EJXYV CYYHZ KMOYH GNEYN XSYSI PHJOM OKLYY HBTXH MLIYI RGGKK PMFH
 # The password for next level
 krypton = "BELOS Z"
 
-def group( string, number ):
-    string = "".join(string.split())
-    return [string[i:i+number] for i in range(0,len(string),number)]
-        
+# TOOLS
+# ---------------------------------------------------------
+# Index of Coincidence
+def IC( datastr ):
+    # Make sure the datastr is all upper and nonblank
+    datastr = "".join(datastr.split())
+    datastr = datastr.upper()
+
+    # Formula: IC = (n  * (n - 1))/(N * (N - 1))
+    # With
+    # n: occurence of letter from alphabet in string
+    # N: total number of letters in string
+    n = 0.0
+    r = 0.0
+    t = float(len(datastr))
+    t = t * (t - 1)
+    for c in st.ascii_uppercase:
+        o = float(datastr.count(c))
+        n += o * (o - 1)
+    r = n / t
+    return r
+
+# Calculate the factors of any integer greater than 2
+def calc_factors( integer ):
+    fact = []
+    if integer < 2:
+        return fact
+    for i in range(2,integer + 1):
+        if( integer % i == 0 ):
+            fact.append( i )
+    return fact
+
+# Make sure datastring is all uppercase 
+# and contains no blank chars
+def clean_datastr( datastr ):
+    if datastr.find(' ') or datastr.find('\n') or datastr.find('\r'):
+        datastr = "".join(datastr.split())
+    if not datastr.isupper():
+        datastr = datastr.upper()
+    return datastr
+
+# Create block-groups of characters
+def block_group( datastr, blksize ):
+    datastr = clean_datastr( datastr )
+    return [datastr[i:i+blksize] for i in range(0,len(datastr),blksize)]
+
+# Create shift-groups of characters
+def shift_group( datastr, blksize ):
+    datastr = clean_datastr( datastr )
+    return [datastr[i:i+blksize] for i in range(len(datastr)-blksize)]
+
+# Simple Caesar Cipher per character
 def rot(char, rotate):
     nr = ord(char)
     if nr > 64 and nr < 91:
@@ -48,86 +102,90 @@ def rot(char, rotate):
         nr += 65
     return chr(nr)
 
-def freq( string, substr, result=[] ):
+# Indices of given substring in datastring
+def find_indc( datastr, substr, indices=[] ):
     try:
-        i = string.index(substr)
+        indx = datastr.index(substr)
     except:
         return
-    if len(result) > 0:
-        result.append(result[-1]+i+1)
+    if len(indices) > 0:
+        indices.append(indices[-1]+indx+1)
     else:
-        result.append( i )
-    freq( string[i+1:], substr, result )
-    return result
+        indices.append( indx )
+    find_indc( datastr[indx+1:], substr, indices )
+    return indices
 
-def block_freq( data, size=1, shift=True ):
-    def do_freq( string ):
-        non_white = "".join(string.split())
-        diction = {}
-        if shift:
-            blocks = [non_white[i:i+size] for i in range(0,len(non_white)-size,1)]
-        else:
-            blocks = group( non_white, size )
+def column_print( data, head=[], nr_of_rows=0 ):
+    # print out all the data
+    if nr_of_rows == 0:
+        nr_of_rows = len(data)
+    # print out the head first
+    if len(head) != 0:
+        data = [head] + data
+    # calculate the column width
+    column_width = max(len(str(attr)) for row in data for attr in row[:-1]) + 2
+    # print
+    for row in data[:nr_of_rows+1]:
+        print "".join(str(attr).ljust(column_width) for attr in row)
 
-        for sub in blocks:
-            if sub not in diction:
-                diction[sub] = freq( non_white, sub, [] )
-        return diction
+# ANALYSE
+# ---------------------------------------------------------
+# IC of given keylength
+def IC_analyses( datastr, keylength=1 ):
+    datastr = clean_datastr( datastr )
+    blocks = [''] * keylength
+    ics = []
+    for i in range(keylength):
+        blocks[i] = "".join([datastr[k] 
+            for k in range(i,len(datastr),keylength)])
+    for b in blocks:
+        ics.append( IC(b) )
+    return (np.mean(ics),np.std(ics))
 
-    dictio = {}
-    if type( data ) is list:
-        for string in data:
-            temp = do_freq( string )
-            for k in temp:
-                if k in dictio:
-                    dictio[k] += temp[k]
-                    dictio[k].sort()
-                else:
-                    dictio[k] = temp[k]
-    elif type( data ) is str:
-        dictio = do_freq( data )
-    return dictio
+# Return indices of each unique block of characters from given size
+# Sorted by occurence
+def block_freq_analyses( datastr, blksize=1, shift=True ):
+    datastr = clean_datastr( datastr )
+    diction = {}
+    if shift:
+        blocks = shift_group( datastr, blksize )
+    else:
+        blocks = block_group( datastr, blksize )
 
-def freq_analyses( data, size=1, shift=True ):
-    diction = block_freq( data, size, shift )
-    total = 0
-    data = []
-    sortdict = sorted(diction.items(),key=lambda kv: len(kv[1]),reverse=True)
-    for a in sortdict:
-        data.append([str(a[0]),str(len(a[1])),str(a[1])])
-        total += len(a[1])
-    return data
+    for sub in blocks:
+        if sub not in diction:
+            diction[sub] = find_indc( datastr, sub, [] )
 
-def calc_factors( integer ):
-    fract = []
-    if integer < 2:
-        return fract
-    for i in range(2,integer/2+1):
-        if( integer % i == 0 ):
-            fract.append( i )
-    return fract
+    dictlist = sorted(diction.items(),key=lambda kv: len(kv[1]),reverse=True)
+    return dictlist
 
-def calc_poss_keylength( strings, substrs ):
+# Calculate the gap (and fractors) between substrings of a datastring
+# You may also give it the block_freq_analyses list
+def keylength_analyses( datastr, substrs ):
     diffs = []
     factors = []
     result = []
-    for string in strings:
-        for substr in substrs:
-            f = freq( "".join(string.split()), substr )
-            diffs += [f[i+1] - f[i] - 1 for i in range(0,len(f)-1,2)]
-        for d in diffs:
-            factors += calc_factors( d )
+    for substr in substrs:
+        if type(substr[1]) == list:
+            f = substr[1]
+        else:
+            f = find_indc( clean_datastr( datastr ), substr )
+        diffs += [f[i+1] - f[i] - 1 for i in range(0,len(f)-1,2)]
+    for d in diffs:
+        factors += calc_factors( d )
 
     result = sorted( set(factors), 
                      key=lambda k: factors.count(k),
                      reverse=True )
     return result
 
-def compare_english( string ):
+
+
+def compare_english( datastr ):
     ENG_ALPH = 'ETAOINSRHLDCUMFPGWYBVKXJQZ'
-    string = "".join(string.split())
-    orderd = sorted( set( string ),
-                     key=lambda k: string.count(k),
+    datastr = clean_datastr( datastr )
+    orderd = sorted( set( datastr ),
+                     key=lambda k: datastr.count(k),
                      reverse=True )
     print orderd
     score = 0
@@ -136,32 +194,25 @@ def compare_english( string ):
             score += 1
     return score
 
-def column_print( data, head=[], nr_of_rows=10 ):
-    if len(head) != 0:
-        data = [head] + data
-    column_width = max(len(attr) for row in data for attr in row[:-1]) + 2
-    for row in data[:nr_of_rows+1]:
-        print "".join(attr.ljust(column_width) for attr in row)
-
-def block_analyses( string, number ):
-    blocks = group( string, number )
+def block_analyses( datastr, blksize ):
+    blocks = group( datastr, blksize )
     letters = {}
-    for i in range(number):
+    for i in range(blksize):
         letters[i] = []
     for block in blocks:
         for i in range(len(block)):
             letters[i].append(block[i])
     return letters
 
-def vineger_decipher( string, key):
-    string = "".join(string.split())
+def vineger_decipher( datastr, key):
+    datastr = clean_datastr( datastr )
     result = ''
-    for i in range( len(string) ):
+    for i in range( len(datastr) ):
         k = key[i % len(key)]
         if k == '-':
             result += '-'
         else:
-            result += rot( string[i], 26 - (ord(k) - 65) )
+            result += rot( datastr[i], 26 - (ord(k) - 65) )
     return result
 
 # lettrs = block_analyses( found1, 4 )
@@ -171,7 +222,7 @@ def vineger_decipher( string, key):
 #     print "letter" + str(int(n) + 1) + " in block"
 #     print column_print( analyses, ["letter","occur","indice"], 5 )
 
-# head = [ "substring", "occurence", "indices" ]
+# head = [ "subdatastr", "occurence", "indices" ]
 # print "found1:"
 # data1 = freq_analyses( found1, 3 ) 
 # column_print( data1, head )
@@ -190,25 +241,25 @@ def print_poss_keylengths():
     keylengths = calc_poss_keylength( [found1, found2, found3], [t[0] for t in total[1:4]])
     print keylengths
 
-def score_english( string ):
+def score_english( datastr ):
     # f = open("dictionary.txt")
     # words = f.read()
     # words = words.split('\n')
     # f.close()
     words = ['THE','AND','THA','ENT','ION','TIO','FOR','NDE','HAS','NCE','EDT','TIS','OFT','STH','MEN']
     score = 0
-    # multiple = len(string) / (len(string) - string.count('-')) 
+    # multiple = len(datastr) / (len(datastr) - datastr.count('-')) 
     for word in words:
-        if word in string:
-            score+=string.count(word)
+        if word in datastr:
+            score+=datastr.count(word)
     return score
     # return score * multiple
 
 def convert_to_key( data, ii, oo, length ):
     blocks = []
     keys = []
-    for string in data:
-        blocks += group( string, length )
+    for datastr in data:
+        blocks += group( datastr, length )
     for b in blocks:
         if ii in b:
             key = ''
@@ -249,17 +300,45 @@ def try_find_key( data ):
             # print "found3 score: " + str(score3)
             print vineger_decipher( found3, k ) 
 
-print vineger_decipher( krypton, "KEYLENGTH" )
+# p = ''
+# for c in vineger_decipher( found1, "KEYLENGTH" ):
+#     p += rot(c,13)
+# print p
+# IC( p )
+# print vineger_decipher( found1, "KEYLENGTH" )
+# IC( vineger_decipher( found1, "KEYLENGTH" ) )
+# freq_an = freq_analyses( [found1], 3 )
+# common_encr = [e[0] for e in freq_an[:15]]
+# keylengths = calc_poss_keylength( [found1], [t[0] for t in freq_an])
+# calc_keylengths( found1 )
 # print "".join(found2.split())
-# try_find_key( [found1,found2,found3] )
-# ZAL -> THE => TGS
-# DLC -> THE => PVB * 8-length
-# blocks = group( found3, 4)
-# for b in blocks:
-#     if "ZAL" in b:
-#         print b
+# IC( found2 )
 
-# print_three_block_freq()
-# key = "TGSPVD"
-# print vineger_decipher( found1, key)
-# print vineger_decipher( found2, key)
+def calc_keylengths( datastr ):
+    datastr = clean_datastr( datastr )
+    blocks = []
+    diffs = []
+    result = {}
+    for b in [datastr[i:i+3] for i in range(0,len(datastr)-3,1)]:
+        if b not in blocks:
+            blocks.append( b )
+            frq = find_indc( datastr, b, [] )
+            if len(frq) > 2:
+                frq.sort()
+                for i in range(len(frq)-1):
+                    for j in range(i+1,len(frq[i:])):
+                        diffs.append( frq[j] - frq[i] )
+    fact = []
+    for d in diffs:
+        fact += calc_factors( d )
+    uniq = set( fact )
+    for u in uniq:
+        result[u] = fact.count( u )
+    result = sorted(result.items(),
+                    key=lambda kv: (kv[1],kv[0]),
+                    reverse=True) 
+    print result
+
+# dat = vineger_decipher( vineger_decipher( found1,'KEYLENGTH' ), 'C' )
+for i in range(1,26):
+    print IC_analyses( found2, i )
