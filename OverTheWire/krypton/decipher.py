@@ -115,6 +115,7 @@ def find_indc( datastr, substr, indices=[] ):
     find_indc( datastr[indx+1:], substr, indices )
     return indices
 
+# Print two dimensional list in nice columns
 def column_print( data, head=[], nr_of_rows=0 ):
     # print out all the data
     if nr_of_rows == 0:
@@ -127,6 +128,24 @@ def column_print( data, head=[], nr_of_rows=0 ):
     # print
     for row in data[:nr_of_rows+1]:
         print "".join(str(attr).ljust(column_width) for attr in row)
+
+# Try to detect if the text is English
+def score_english( text ):
+    # Get all the words from the dictionare.txt file
+    f = open("./dictionary.txt")
+    eng_words = f.read()
+    f.close()
+    # Make list of dictionary and sort largest word first
+    eng_words = eng_words.split()
+    eng_words.sort(key = lambda s: len(s),reverse=True)
+    # Calculate a score based on the remaining text
+    t = float(len(text))
+    for w in eng_words:
+        if w in text:
+            text = "".join(text.split(w))
+        if len(text) == 0:
+            break
+    return (t - float(len(text))) / t * 100
 
 # ANALYSE
 # ---------------------------------------------------------
@@ -339,6 +358,8 @@ def calc_keylengths( datastr ):
                     reverse=True) 
     print result
 
-# dat = vineger_decipher( vineger_decipher( found1,'KEYLENGTH' ), 'C' )
-for i in range(1,26):
-    print IC_analyses( found2, i )
+print vineger_decipher( found1,'KEYLENGTH' )
+print vineger_decipher( found2,'KEYLENGTH' )
+print vineger_decipher( found3,'KEYLENGTH' )
+# for i in range(1,26):
+#     print IC_analyses( found2, i )
