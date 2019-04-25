@@ -1,0 +1,1 @@
+Needed to extract the .ico file. Using a util called binwalk

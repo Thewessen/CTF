@@ -1,0 +1,1 @@
+To convert .png to .txt I used a commandlinetool: tesseract-ocr
