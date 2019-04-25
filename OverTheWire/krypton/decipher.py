@@ -1,38 +1,11 @@
 #!/usr/bin/python
 
-# (from previous level)
-# An example of a polyalphabetic cipher is called a Vigenre Cipher.  It works
-# like this:
-# 
-# If we use the key(K)  'GOLD', and P = PROCEED MEETING AS AGREED, then "add"
-# P to K, we get C.  When adding, if we exceed 25, then we roll to 0 (modulo 26).
-# 
-# 
-# P     P R O C E   E D M E E   T I N G A   S A G R E   E D
-# K     G O L D G   O L D G O   L D G O L   D G O L D   G O
-# 
-# becomes:
-# 
-# P     15 17 14 2  4  4  3 12  4 4  19  8 13 6  0  18 0  6 17 4 4   3
-# K     6  14 11 3  6 14 11  3  6 14 11  3  6 14 11  3 6 14 11 3 6  14
-# C     21 5  25 5 10 18 14 15 10 18  4 11 19 20 11 21 6 20  2 8 10 17
-# 
-# So, we get a ciphertext of:
-# 
-# VFZFK SOPKS ELTUL VGUCH KR
-
-# (this level)
-# Frequency analysis can break a known key length as well.  Lets try one
-# last polyalphabetic cipher, but this time the key length is unknown.
-
-# (great article)
-# https://inventwithpython.com/hacking/chapter21.html
-
 import string as st
 # .ascii_uppercase
 import numpy as np
 # .mean
 # .std (standard deviation)
+import argparse
 
 # found text
 found1 = "SXULWGNXIOWRZJGOFLCMRHEFZALGSPDXBLMPWIQTXJGLARIYRIBLPPCHMXMGCTZDLCLKRUYMYSJTWUTXZCMRHEFZALOTMNLBLULVMCQMGCTZDLCPTBIAVPMLNVRJNSSXWTXJGLARIQPEFUGVPPGRLGOMDKWRSIFKTZYRMQHNXDUOWQTXJGLARIQAVVTZVPLMAIVZPHCXFPAVTMLBSDOIFVTPBACSEQKOLBCRSMAMULPSPPYFCXOKHLZXUOGNLIDZVRALDOACCINRENYMLRHVXXJDXMSINBXUGIUPVRGESQSGYKQOKLMXRSIBZALBAYJMAYAVBXRSICKKPYHULWFUYHBPGVIGNXWBIQPRGVXYSSBELNZLVWIMQMGYGVSWGPWGGNARSPTXVKLPXWGDXRJHUSXQMIVTZYOGCTZRJYVBKMZHBXYVBITTPVTMOOWSAIERTASZCOITXXLYJAZQCGKPCSLZRYEMOOVCHIEKTRSREHMGNTSKVEPNNCTUNEOFIRTPPDLYAPNOGMKGCZRGNXARVMYIBLXUQPYYHGNXYOACCINQBUQAGELNRTYQIHLANTWHAYCPRJOMOKJYTVSGVLYRRSIGNKVXIMQJEGGJOMLMSGNVVERRCMRYBAGEQNPRGKLBXFLRPXRZDEJESGNXSYVBDSSZALCXYEICXXZOVTPWBLEVKZCDEAJYPCLCDXUGMARMLRWVTZLXIPLPJKKLCIREPRJYVBITPVVZPHCXFPCRGKVPSSCPBXWVXIRSSHYTUNWCGIANNUNVCOEAJLLFILECSOOLCTGCMGATSBITPPNZBVXWUPVRIHUMIBPHGUXUQPYYHNZMOKXDLZBAKLNTCCMBJTZKXRSMFSKZCSSELPUMAREBCIPKGAVCYEXNOGLNLCCJVBXHXHRHIAZBLDLZWIFYXKLMPELQGRVPAFZQNVKVZLCEMPVKPFERPMAZALVMDPKHGKKCLYOLRXTSNIBELRYNIVMKPECVXHBELNIOETUXSSYGVTZARERLVEGGNOQCYXFCXYOQYOISUKARIQHEYRHDSREFTBLEVXHMYEAJPLCXKTRFZXYOZCYXUKVVMOJLRRMAVCXFLHOKXUVEGOSARRHBSSYHQUSLXSDJINXLHPXCCVNVIPXKMFXVZLTOWQLKRYTZDLCDTVXBACSDELVYOLBCWPEERTZDTYDXFAILBRYEYEGESIHCQMPOXUDMLZVVMBUKPGECEGIWOHMFXGNXPBWKPVRSXZCEEPWVTMOOIYCXURRVBHCCSSKOLXXQSEQRTAOPWNSZKMVDLCPRTRBZRGPZAAGGKZIMAPRLKVWEAZRTXXZCSDMVVZBZRWSMNRIMZSRYXIEOVHGLGNLFZKHXKCESEKEHDIFLZRVKVFIBXSEKBTZSPEEAZMVDLCSYZGGYKGCELNTTUIGMXQHTBJKXGZRFEXABIAPMIKWARVMFKUGGFYJRSIPNBJUILDSSZALMSAVPNTXIBSMO"
@@ -51,7 +24,6 @@ decrkrypt = "RANDOM"
 def IC( datastr ):
     # Make sure the datastr is all upper and nonblank
     datastr = "".join(datastr.split())
-    datastr = datastr.upper()
 
     # Formula: IC = (n  * (n - 1))/(N * (N - 1))
     # With
@@ -77,6 +49,14 @@ def calc_factors( integer ):
             fact.append( i )
     return fact
 
+# Make sure printable text contains only UTF8 characters
+# BRUTE METHOD
+def clean_text( text ):
+    for c in text:
+        if ord(c) > 122:
+            text = "".join(text.split(c))
+    return text
+
 # Make sure datastring is all uppercase 
 # and contains no blank chars
 def clean_datastr( datastr ):
@@ -94,7 +74,11 @@ def block_group( datastr, blksize ):
 # Create shift-groups of characters
 def shift_group( datastr, blksize ):
     datastr = clean_datastr( datastr )
-    return [datastr[i:i+blksize] for i in range(len(datastr)-blksize)]
+    return [datastr[i:i+blksize] for i in range(len(datastr)-blksize+1)]
+
+# Sort list of tuples by value in reverse order (high-low)
+def sort_by_value( tuples ):
+    return sorted( tuples, key=lambda k: k[1], reverse=True )
 
 # Simple Caesar Cipher per character
 def rot(char, rotate):
@@ -118,6 +102,20 @@ def find_indc( datastr, substr, indices=[] ):
         indices.append( indx )
     find_indc( datastr[indx+1:], substr, indices )
     return indices
+
+def block_freq( datastr, blksize=1, shift=True ):
+    datastr = clean_datastr( datastr )
+    diction = {}
+    if shift:
+        blocks = shift_group( datastr, blksize )
+    else:
+        blocks = block_group( datastr, blksize )
+
+    for sub in blocks:
+        if sub not in diction:
+            diction[sub] = blocks.count(sub)
+
+    return sort_by_value( diction.items() )
 
 # Print two dimensional list in nice columns
 def column_print( data, head=[], nr_of_rows=0 ):
@@ -158,6 +156,8 @@ def score_english( text ):
 # IC of given keylength
 def IC_analyses( datastr, keylength=1 ):
     datastr = clean_datastr( datastr )
+    if keylength > len( datastr ):
+        return (0.0,0.0)
     blocks = [''] * keylength
     ics = []
     for i in range(keylength):
@@ -165,25 +165,24 @@ def IC_analyses( datastr, keylength=1 ):
             [datastr[k] for k in range(i,len(datastr),keylength)]
         )
     for b in blocks:
-        ics.append( IC(b) )
-    return (np.mean(ics),np.std(ics))
+        if len(b) >= keylength:
+            ics.append( IC(b) )
+    if len(ics) > 1:
+        return (np.mean(ics),np.std(ics))
+    elif len(ics) == 1:
+        return (ics[0],0.0)
+    else:
+        return (0.0,0.0)
 
 # Return indices of each unique block of characters from given size
 # Sorted by occurence
 def block_freq_analyses( datastr, blksize=1, shift=True ):
-    datastr = clean_datastr( datastr )
-    diction = {}
-    if shift:
-        blocks = shift_group( datastr, blksize )
-    else:
-        blocks = block_group( datastr, blksize )
-
-    for sub in blocks:
-        if sub not in diction:
-            diction[sub] = find_indc( datastr, sub, [] )
-
-    dictlist = sorted(diction.items(),key=lambda kv: len(kv[1]),reverse=True)
-    return dictlist
+    freq = block_freq( datastr, blksize, shift )
+    total = float(len(datastr))
+    print total
+    print sum([f[1] for f in freq])
+    print freq
+    return [(f[0], float(f[1])/total) for f in freq]
 
 # Calculate the gap (and fractors) between substrings of a datastring
 # You may also give it the block_freq_analyses list
@@ -220,6 +219,7 @@ def block_analyses( datastr, blksize ):
 # Vineger cipher
 def vineger( datastr, key, fn ):
     result = ''
+    datastr = clean_datastr( datastr )
     illegal = st.punctuation + st.whitespace
     for i in range( len(datastr) ):
         k = key[i % len(key)]
@@ -238,25 +238,190 @@ def vineger_encrypt( datastr, key):
 def vineger_decrypt( datastr, key):
     return vineger( datastr, key, lambda k: 26 - (k - 65) )
 
+# Mono aplhabetic substitution cipher
+def alphabetic( datastr, key ):
+    if len(key) != 26 or len(set(key)) != 26:
+        print "Not a complete alhabet found in mono alphabetic cipher key: " + str(key)
+        exit(2)
+    key = key.upper()
+    skip = st.punctuation + st.whitespace
+    result = ''
+    for c in datastr:
+        if c in skip:
+            result += c
+        else:
+            result += key[ord(c.upper()) - 65].lower()
+    return result
+# Also removes punctuations and whitespace
+# Makes text all uppercase
+# And groups letters by 5
+# To make it harder too decode
+def alphabetic_encrypt( datastr, key ):
+    result = alphabetic( datastr, key )
+    remove = st.punctuation + st.whitespace
+    for p in remove:
+        result = "".join(result.split(p))
+    return " ".join( block_group( result.upper(), 5 ) )
+
+def alphabetic_decrypt( datastr, key ):
+    decr_key = [''] * 26
+    key = key.upper()
+    for i in range(len(key)):
+        decr_key[ord(key[i])-65] = chr(65 + i)
+    decr_key = "".join( decr_key )
+    return alphabetic( datastr, decr_key )
+
 # Simple Caesar cipher (ROT#)
-def caesar_rot( datastr, rott, decrypt=True ):
-    char = chr( rott + 65 )
-    if decrypt:
-        return vineger_decrypt( datastr, char )
-    else:
-        return vineger_encrypt( datastr, char )
+# Keeps punctuations and whitespace
+def caesar_encrypt( datastr, rott ):
+    result = ''
+    skip = st.punctuation + st.whitespace
+    for c in datastr:
+        if c in skip:
+            result += c
+        else:
+            result += rot(c, rott)
+    return result
+
+def caesar_decrypt( datastr, rott ):
+    return caesar_encrypt( datastr, 26-rott )
 
 # FIND KEYS
 # ---------------------------------------------------------
-# Caesar rotation
+# Caesar rotation value
 def find_ROT( datastr ):
     result = []
     for i in range(26):
-        text = caesar( datastr, i )
-        lst.append(( i, score_english(text) ))
-    result.sort(key=lambda k: k[1], reverse=True)
-    return result
+        text = caesar_decrypt( datastr, i )
+        result.append(( i, score_english( text.upper() ) ))
+    return sort_by_value( result )
 
+def detect_cipher( datastr, key, interactive=False ):
+    cipher = ''
+    if key != None:
+        try:
+            key = int(key)
+        except:
+            cipher = "vineger"
+        else:
+            cipher = "caesar"
+    else:
+        if len(datastr) >= 26:
+            an = []
+            for i in range(1,26):
+                an.append(IC_analyses( datastr, i )[0])
+            dev = np.std(an)
+            if dev < 0.003:
+                cipher = "alphabetic"
+            else:
+                cipher = "vineger"
+        else:
+            if interactive:
+                print "Data string is too small to determin which cipher to use."
+            cipher = "caesar"
+    if interactive:
+        print "Trying to use a %s cipher for the data string." % cipher
+    return cipher
+
+
+def main():
+    parser = argparse.ArgumentParser(description='A commandline deCipher tool.',
+            epilog="Created by S. Thewessen")
+    parser.add_argument('data', metavar='data',nargs='+',
+            help='Input string(s) too use for encoding/decoding')
+    parser.add_argument('-e', metavar='encode', action='store_const',const=True,default=False,
+            help='Run this program too encode the input (default: decode)')
+    parser.add_argument('-i', metavar='interactive', action='store_const',const=True,default=False,
+            help='Interactive mode.')
+    parser.add_argument('-k','--key', metavar='key', nargs='?',
+            help='The key too use for the cipher. If the key is an integer, a basic Caesar Cipher is used.')
+    parser.add_argument('-l','--length', metavar='length', nargs='?', type=int,
+            help='The length of the key')
+    parser.add_argument('-c','--cipher', choices=['caesar','alphabetic','vineger'],
+            help='Force a specific cipher too use.')
+    args = parser.parse_args()
+
+    key = None
+    data = []
+    # Get the correct key and data
+    if args.key == None and args.length == None and len(args.data) > 1:
+        try:
+            f = open( args.data[0] )
+            f.close()
+        except:
+            args.key = args.data[0]
+            args.data = args.data[1:]
+    # Some error messages for given key and length
+    if args.key and args.length:
+        if len(args.key) != args.length:
+            print "The given key '%s' and the given length %d are not the same. Please make sure they are or just ommit the length." % (args.key,args.length)
+            exit(2)
+    if args.e and args.key == None:
+        print "If you want to encrypt a given data string, you should give a key to encrypt with!"
+        exit(2)
+    if type(args.key) == str:
+        for c in st.punctuation:
+            if c in args.key and (args.e or c != '?'):
+                if args.e:
+                    e = 'encrypt'
+                else:
+                    e = 'decrypt'
+                print "You can't %s a data string with a key containing '%s'! Key given: '%s'" % (e, c, args.key)
+                exit(2)
+    print args
+    # Setup the right function to use
+    def fn( dstr ):
+        if args.cipher == "caesar":
+            if args.key != None:
+                try:
+                    args.key = int(args.key)
+                except:
+                    print "You need an integer key to use with a rotation cipher!"
+                    exit(2)
+            else:
+                if args.e:
+                    return caesar_encrypt( datastr, args.key )
+                else:
+                    if args.key == None:
+                        result = find_ROT( datastr )
+                        if args.i:
+                            column_print( result )
+                        (args.key, score) = result[0]
+                        print "Rotation %d is used with an english score of %.2f" % (args.key, score) + "%:"
+                    return caesar_decrypt( datastr, args.key )
+        if args.cipher == "alphabetic":
+            if args.key != None:
+                if args.e:
+                    return alphabetic_encrypt( datastr, args.key )
+                else:
+                    return alphabetic_decrypt( datastr, args.key )
+
+    datastr = ''
+    for d in args.data:
+        try:
+            f = open( d )
+            datastr = f.read()
+            f.close()
+        except Exception as e:
+            print e
+            exit(2)
+        datastr = datastr.strip()
+        datastr = clean_text( datastr )
+        if args.i: print "Input data given:\n" + datastr
+        if args.cipher == None:
+            if args.i: print "No specific cipher was given." 
+            args.cipher = detect_cipher( datastr, args.key, args.i )
+        output = fn( datastr )
+        if args.i: print "Output:"
+        print output
+
+
+if __name__ == "__main__":
+    # main()
+    print block_freq_analyses( "HEYYOUTHERE", 1 )
+
+# UNUSED
+# ---------------------------------------------------------
 def print_poss_keylengths():
     print "possible key-lengths:" 
     keylengths = calc_poss_keylength( [found1, found2, found3], [t[0] for t in total[1:4]])
@@ -332,4 +497,3 @@ def calc_keylengths( datastr ):
                     reverse=True) 
     print result
 
-print vineger_decrypt( found1, "KEY?ENGT?" )
