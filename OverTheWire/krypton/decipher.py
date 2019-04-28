@@ -29,7 +29,7 @@ def common_EN_letters():
     stats = [s.split('\t') for s in ltts[2:28]]
     # Grab only the stats needed: ('word',mean,std,min,max)
     en_stats = [(s[8].strip(),float(s[0]),float(s[2]),float(s[3]),float(s[4])) for s in stats]
-    print en_stats
+    return en_stats
 
 # Index of Coincidence
 def IC( datastr ):
@@ -87,6 +87,18 @@ def shift_group( datastr, blksize ):
     datastr = clean_datastr( datastr )
     return [datastr[i:i+blksize] for i in range(len(datastr)-blksize+1)]
 
+# Group every nth letter of each block 
+# for treading as their own rot-cipher (vineger)
+def nthletter_group( datastr, blksize ):
+    blocks = block_group( datastr, blksize )
+    letters = {}
+    for i in range(blksize):
+        letters[i] = []
+    for block in blocks:
+        for i in range(len(block)):
+            letters[i].append(block[i])
+    return letters
+
 # Sort list of tuples by value in reverse order (high-low)
 def sort_by_value( tuples ):
     return sorted( tuples, key=lambda k: k[1], reverse=True )
@@ -121,6 +133,8 @@ def find_indc( datastr, substr, indices=[] ):
     find_indc( datastr[indx+1:], substr, indices )
     return indices
 
+# Occurence of each block/group of characters
+# Same as freq() when blksize=1 (default)
 def block_freq( datastr, blksize=1, shift=True ):
     datastr = clean_datastr( datastr )
     diction = {}
@@ -128,11 +142,9 @@ def block_freq( datastr, blksize=1, shift=True ):
         blocks = shift_group( datastr, blksize )
     else:
         blocks = block_group( datastr, blksize )
-
     for sub in blocks:
         if sub not in diction:
             diction[sub] = blocks.count(sub)
-
     return sort_by_value( diction.items() )
 
 # Print two dimensional list in nice columns
@@ -148,26 +160,6 @@ def column_print( data, head=[], nr_of_rows=0 ):
     # print
     for row in data[:nr_of_rows+1]:
         print "".join(str(attr).ljust(column_width) for attr in row)
-
-# Try to detect if the text is English
-def score_english( text ):
-    # Get all the words from the dictionare.txt file
-    f = open("dictionary.txt")
-    eng_words = f.read()
-    f.close()
-    # Make list of dictionary and sort largest word first
-    eng_words = eng_words.split()
-    eng_words.sort(key = lambda s: len(s),reverse=True)
-    # Calculate a score based on the remaining text
-    t = float(len(text))
-    for w in eng_words:
-        if len(w) > len(text):
-            continue
-        if w in text:
-            text = "".join(text.split(w))
-        if len(text) == 0:
-            break
-    return (t - float(len(text))) / t * 100
 
 # ANALYSE
 # ---------------------------------------------------------
@@ -192,15 +184,12 @@ def IC_analyses( datastr, keylength=1 ):
     else:
         return (0.0,0.0)
 
-# Return indices of each unique block of characters from given size
+# Return average occurence of specific block
 # Sorted by occurence
 def block_freq_analyses( datastr, blksize=1, shift=True ):
     freq = block_freq( datastr, blksize, shift )
     total = float(len(datastr))
-    print total
-    print sum([f[1] for f in freq])
-    print freq
-    return [(f[0], float(f[1])/total) for f in freq]
+    return [(f[0], float(f[1]*len(f[0]))/total) for f in freq]
 
 # Calculate the gap (and fractors) between substrings of a datastring
 # You may also give it the block_freq_analyses list
@@ -222,15 +211,65 @@ def keylength_analyses( datastr, substrs ):
                      reverse=True )
     return result
 
-def block_analyses( datastr, blksize ):
-    blocks = group( datastr, blksize )
-    letters = {}
-    for i in range(blksize):
-        letters[i] = []
-    for block in blocks:
-        for i in range(len(block)):
-            letters[i].append(block[i])
-    return letters
+# Try to detect if the text is English
+def score_english( text ):
+    # Get all the words from the dictionare.txt file
+    f = open("dictionary.txt")
+    eng_words = f.read()
+    f.close()
+    # Make list of dictionary and sort largest word first
+    eng_words = eng_words.split()
+    eng_words.sort(key = lambda s: len(s),reverse=True)
+    # Calculate a score based on the remaining text
+    t = float(len(text))
+    for w in eng_words:
+        if len(w) > len(text):
+            continue
+        if w in text:
+            text = "".join(text.split(w))
+        if len(text) == 0:
+            break
+    return (t - float(len(text))) / t * 100
+
+# FIND KEYS
+# ---------------------------------------------------------
+# Caesar rotation value
+def find_ROT( datastr ):
+    result = []
+    for i in range(26):
+        text = caesar_decrypt( datastr, i )
+        result.append(( i, score_english( text.upper() ) ))
+    return sort_by_value( result )
+
+# Alphabetic cipher compose keys
+# Given two alphabets
+def alphabetic_compose_key( from_alpha, to_alpha ):
+    EN_ALPHABET = "ETAONISRHLDUCMFWGPYBVKXJQZ"
+    key = [''] * 26
+    from_alpha = from_alpha.upper()
+    to_alpha = to_alpha.upper()
+    for i in range(len(key)):
+        try:
+            key[ord(from_alpha[i])-65] = to_alpha[i]
+        except:
+            break
+    # fill the gaps...
+    while True:
+        try:
+            indx = key.index('')
+        except:
+            break
+        else:
+            for c in EN_ALPHABET:
+                if c not in key:
+                    key[indx] = c
+                    break
+
+    return "".join( key )
+
+# Compose possible key's from one-letter frequency analyses
+def alphabetic_keys( freq_an ):
+    l
 
 # ENCRYPT/DECRYPT
 # ---------------------------------------------------------
@@ -282,11 +321,7 @@ def alphabetic_encrypt( datastr, key ):
     return " ".join( block_group( result.upper(), 5 ) )
 
 def alphabetic_decrypt( datastr, key ):
-    decr_key = [''] * 26
-    key = key.upper()
-    for i in range(len(key)):
-        decr_key[ord(key[i])-65] = chr(65 + i)
-    decr_key = "".join( decr_key )
+    decr_key = alphabetic_compose_key( key, st.ascii_uppercase )
     return alphabetic( datastr, decr_key )
 
 # Simple Caesar cipher (ROT#)
@@ -300,16 +335,8 @@ def caesar_encrypt( datastr, rott ):
 def caesar_decrypt( datastr, rott ):
     return caesar_encrypt( datastr, 26-rott )
 
-# FIND KEYS
+# DETECT ENCRYPTION
 # ---------------------------------------------------------
-# Caesar rotation value
-def find_ROT( datastr ):
-    result = []
-    for i in range(26):
-        text = caesar_decrypt( datastr, i )
-        result.append(( i, score_english( text.upper() ) ))
-    return sort_by_value( result )
-
 def detect_cipher( datastr, key, interactive=False ):
     cipher = ''
     if key != None:
@@ -337,15 +364,17 @@ def detect_cipher( datastr, key, interactive=False ):
         print "Trying to use a %s cipher for the data string." % cipher
     return cipher
 
-
+# MAIN PROGRAM
+# ---------------------------------------------------------
+# The program decipher.py reads from sys.args
 def main():
     parser = argparse.ArgumentParser(description='A commandline deCipher tool.',
             epilog="Created by S. Thewessen")
     parser.add_argument('data', metavar='data',nargs='+',
             help='Input string(s) too use for encoding/decoding')
-    parser.add_argument('-e', metavar='encode', action='store_const',const=True,default=False,
+    parser.add_argument('-e','--encode', metavar='encode', action='store_const',const=True,default=False,
             help='Run this program too encode the input (default: decode)')
-    parser.add_argument('-i', metavar='interactive', action='store_const',const=True,default=False,
+    parser.add_argument('-i','--interactive', metavar='interactive', action='store_const',const=True,default=False,
             help='Interactive mode.')
     parser.add_argument('-k','--key', metavar='key', nargs='?',
             help='The key too use for the cipher. If the key is an integer, a basic Caesar Cipher is used.')
@@ -370,13 +399,13 @@ def main():
         if len(args.key) != args.length:
             print "The given key '%s' and the given length %d are not the same. Please make sure they are or just ommit the length." % (args.key,args.length)
             exit(2)
-    if args.e and args.key == None:
+    if args.encode and args.key == None:
         print "If you want to encrypt a given data string, you should give a key to encrypt with!"
         exit(2)
     if type(args.key) == str:
         for c in st.punctuation:
-            if c in args.key and (args.e or c != '?'):
-                if args.e:
+            if c in args.key and (args.encode or c != '?'):
+                if args.encode:
                     e = 'encrypt'
                 else:
                     e = 'decrypt'
@@ -393,22 +422,33 @@ def main():
                     print "You need an integer key to use with a rotation cipher!"
                     exit(2)
             else:
-                if args.e:
+                if args.encode:
                     return caesar_encrypt( datastr, args.key )
                 else:
                     if args.key == None:
                         result = find_ROT( datastr )
-                        if args.i:
+                        if args.interactive:
                             column_print( result )
                         (args.key, score) = result[0]
                         print "Rotation %d is used with an english score of %.2f" % (args.key, score) + "%:"
                     return caesar_decrypt( datastr, args.key )
         if args.cipher == "alphabetic":
             if args.key != None:
-                if args.e:
+                if args.encode:
                     return alphabetic_encrypt( datastr, args.key )
                 else:
                     return alphabetic_decrypt( datastr, args.key )
+            else:
+                # TODO: Find the key!!
+                freq = block_freq_analyses( datastr )
+                EN = common_EN_letters()
+                result = []
+                for i in range(len(EN)):
+                    if i < len(freq):
+                        result.append( freq[i] + EN[i] )
+                    else:
+                        result.append( ('','') + EN[i] )
+                column_print( result )
 
     datastr = ''
     for d in args.data:
@@ -421,19 +461,20 @@ def main():
             exit(2)
         datastr = datastr.strip()
         datastr = clean_text( datastr )
-        if args.i: print "Input data given:\n" + datastr
+        if args.interactive: print "Input data given:\n" + datastr
         if args.cipher == None:
-            if args.i: print "No specific cipher was given." 
-            args.cipher = detect_cipher( datastr, args.key, args.i )
+            if args.interactive: print "No specific cipher was given." 
+            args.cipher = detect_cipher( datastr, args.key, args.interactive )
         output = fn( datastr )
-        if args.i: print "Output:"
+        if args.interactive: print "Output:"
         print output
 
 
 if __name__ == "__main__":
-    # main()
-    # print block_freq_analyses( "HEYYOUTHERE", 1 )
-    common_EN_letters()
+    main()
+    # print alphabetic_compose_key( "SCQJUBGNDTZVWYKAEFOIHR", "SCQJUBGNDTZVWYKAEFOIHR" )
+    # column_print( common_EN_letters() )
+    # column_print( block_freq_analyses( "HEYHEYHEYHEY" ) )
 
 # UNUSED
 # ---------------------------------------------------------
