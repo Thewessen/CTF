@@ -1,0 +1,10 @@
+Filetrafersal is possible
+
+../../../proc/self/cmdline
+./main
+
+./connect.sh | tee output.txt
+2
+../main
+
+

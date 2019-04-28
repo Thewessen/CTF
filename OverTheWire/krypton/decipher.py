@@ -9,6 +9,28 @@ import argparse
 
 # TOOLS
 # ---------------------------------------------------------
+# Get common EN words including mathstats
+def common_EN_words():
+    f = open('EN-commonwords.txt')
+    words = f.readlines()
+    f.close()
+    # Not the head
+    stats = [s.split('\t') for s in words[1:]]
+    # Grab only the stats needed: ('word',mean,std,min,max)
+    word_stats = [(s[7].strip(),float(s[0]),float(s[2]),float(s[3]),float(s[4])) for s in stats]
+    return word_stats
+
+# Get common EN words including mathstats
+def common_EN_letters():
+    f = open('EN-Letters.txt')
+    ltts = f.readlines()
+    f.close()
+    # Not the head and space
+    stats = [s.split('\t') for s in ltts[2:28]]
+    # Grab only the stats needed: ('word',mean,std,min,max)
+    en_stats = [(s[8].strip(),float(s[0]),float(s[2]),float(s[3]),float(s[4])) for s in stats]
+    print en_stats
+
 # Index of Coincidence
 def IC( datastr ):
     # Make sure the datastr is all upper and nonblank
@@ -409,8 +431,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
     # print block_freq_analyses( "HEYYOUTHERE", 1 )
+    common_EN_letters()
 
 # UNUSED
 # ---------------------------------------------------------

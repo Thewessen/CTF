@@ -1,0 +1,8 @@
+It's a DOS program, so run with util 'dosbox'
+
+in dosbox. Redirect all output to a file (www.txt)
+
+cat won't show all the characters!!
+vi does!
+
+
