@@ -1,1 +1,18 @@
+# vim
 Session.vim
+
+# tools output
+skipfish/
+sqlmap/
+
+# Javascript
+node_modules/
+
+# Python
+__pycache__/
+env/
+
+# tags
+tags
+tags.lock
+tags.temp
