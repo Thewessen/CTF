@@ -14,8 +14,8 @@ def calc(recipe):
 def GFW(func): # Great Firewall of the observable universe and it's infinite timelines
     @functools.wraps(func)
     def federation(*args, **kwargs):
-        session['ingredient'] = 'a' * 20
-        session['measurements'] = "{{ 'flag' }}"
+        session['ingredient'] = 'aaa'
+        session['measurements'] = "2 + 2"
         ingredient = session.get('ingredient', None)
         measurements = session.get('measurements', None)
 
@@ -26,18 +26,18 @@ def GFW(func): # Great Firewall of the observable universe and it's infinite tim
             regex = re.compile('|'.join(map(re.escape, ['[', '(', '_', '.'])))
             matches = regex.findall(recipe)
             
-            # if matches: 
-            #     print('Invalid token: ' + ', '.join(set(matches)))
-            #     return render_template('index.html', blacklisted='Morty you dumbass: ' + ', '.join(set(matches)))
+            if matches: 
+                print('Invalid token: ' + ', '.join(set(matches)))
+                return render_template('index.html', blacklisted='Morty you dumbass: ' + ', '.join(set(matches)))
             
             if len(recipe) > 300: 
-                print(f'Size to big: ({len(recipe)}) {recipe}')
+                print('Size to big: (%s) %s' % (len(recipe), recipe))
                 return func(*args, **kwargs) # ionic defibulizer can't handle more bytes than that
             
             print('all checks passed')
             calc(recipe)
             print(garage)
-            # return render_template('index.html', calculations=garage[ingredient])
+            return render_template('index.html', calculations=garage[ingredient])
             return func(*args, **kwargs) # rick deterrent
 
         ingredient = session['ingredient'] = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
