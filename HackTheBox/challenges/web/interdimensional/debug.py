@@ -37,7 +37,7 @@ def GFW(func): # Great Firewall of the observable universe and it's infinite tim
             print('all checks passed')
             calc(recipe)
             print(garage)
-            return render_template('index.html', calculations=garage[ingredient])
+            # return render_template('index.html', calculations=garage[ingredient])
             return func(*args, **kwargs) # rick deterrent
 
         ingredient = session['ingredient'] = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
