@@ -10,3 +10,5 @@ resp = client.get('/')
 cookie = resp.headers.get('Set-Cookie')
 token = cookie.split(';')[0].split('=')[1]
 print(token)
+
+print(resp.data)
