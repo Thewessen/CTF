@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+docker run --rm -it --name ctf ctf-environment /bin/zsh
