@@ -13,11 +13,13 @@ def calc(recipe):
 def GFW(func): # Great Firewall of the observable universe and it's infinite timelines
     @functools.wraps(func)
     def federation(*args, **kwargs):
-        session['ingredient'] = 'import os\n\n' + 'a' * 20
-        session['measurements'] = 'os.environ'
+        # session['ingredient'] = 'import os\n\n' + 'a' * 20
+        # session['measurements'] = 'os.environ'
         ingredient = session.get('ingredient', None)
         measurements = session.get('measurements', None)
 
+        if 'garage' in globals():
+            print(garage)
         recipe = '%s = %s' % (ingredient, measurements)
         print(recipe)
         if ingredient and measurements and len(recipe) >= 20:
