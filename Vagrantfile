@@ -9,7 +9,7 @@ Vagrant.configure('2') do |config|
   # Default shared folder (disabled)
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
-  # Custom shared folder (disabled)
+  # Custom shared folder
   config.vm.synced_folder '../data', '/data',
     SharedFoldersEnableSymlinksCreate: false,
     create: true,

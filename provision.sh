@@ -40,7 +40,6 @@ upgrade_postgresql () {
     pg_dropcluster --stop 13 main
     pg_upgradecluster 12 main
     pg_dropcluster 12 main
-    # systemctl restart postgresql
     apt-get purge \
         --assume-yes \
         --allow-change-held-packages \
@@ -53,8 +52,11 @@ add_configs () {
     # Clone dotfiles repo
     rm "$homedir/.bashrc" "$homedir/.zshrc"
     git clone -b minimal --single-branch --bare https://github.com/Thewessen/dotfiles $homedir/dotfiles
-    git --git-dir=./dotfiles --work-tree=$homedir checkout
-    git init --seperate-git-dir=$homedir/dotfiles $homedir
+    git --git-dir=$homedir/dotfiles --work-tree=$homedir checkout
+    git init --separate-git-dir=$homedir/dotfiles $homedir
+    cd $homedir
+    git config status.showUntrackedFiles no
+    cd -
 }
 
 add_zsh_theme () {
