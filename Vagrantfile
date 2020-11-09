@@ -6,14 +6,14 @@ Vagrant.configure('2') do |config|
   config.vm.hostname = 'kali'
   config.vm.box = 'kalilinux/rolling'
 
-  # Default shared folder
+  # Default shared folder (disabled)
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
-  # Custom shared folder
+  # Custom shared folder (disabled)
   config.vm.synced_folder '../data', '/data',
     SharedFoldersEnableSymlinksCreate: false,
     create: true,
-    disabled: false
+    disabled: true
 
   config.vm.provider 'virtualbox' do |vb|
     # Display the VirtualBox GUI when booting the machine

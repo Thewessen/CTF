@@ -52,9 +52,9 @@ upgrade_postgresql () {
 add_configs () {
     # Clone dotfiles repo
     rm "$homedir/.bashrc" "$homedir/.zshrc"
-    git clone -b minimal --single-branch --bare https://github.com/Thewessen/dotfiles dotfiles
+    git clone -b minimal --single-branch --bare https://github.com/Thewessen/dotfiles $homedir/dotfiles
     git --git-dir=./dotfiles --work-tree=$homedir checkout
-    rm -rf dotfiles
+    git init --seperate-git-dir=$homedir/dotfiles $homedir
 }
 
 add_zsh_theme () {
