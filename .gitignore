@@ -17,3 +17,6 @@ env/
 tags
 tags.lock
 tags.temp
+
+# vagrant
+**/.vagrant/
