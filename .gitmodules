@@ -1,3 +1,6 @@
 [submodule ".docker"]
 	path = .docker
 	url = https://github.com/aaaguirrep/pentest.git
+[submodule "HackTheBox/challenges/web/php_console/php-console-extension"]
+	path = HackTheBox/challenges/web/php_console/php-console-extension
+	url = https://github.com/barbushin/php-console-extension.git

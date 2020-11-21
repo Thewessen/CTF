@@ -1,0 +1,12 @@
+{
+  "name": "php_console",
+  "version": "1.0.0",
+  "description": "php console authentication",
+  "main": "index.js",
+  "private": true,
+  "author": "sthewessen",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.0.0"
+  }
+}
