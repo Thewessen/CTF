@@ -1,0 +1,44 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: php-console_dirb.txt
+START_TIME: Fri Nov 20 15:53:22 2020
+URL_BASE: http://165.232.47.168:31866/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://165.232.47.168:31866/ ----
++ http://165.232.47.168:31866/index.php (CODE:200|SIZE:16292)
++ http://165.232.47.168:31866/server-status (CODE:403|SIZE:282)
+
+-----------------
+END_TIME: Fri Nov 20 15:55:15 2020
+DOWNLOADED: 4612 - FOUND: 2
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: php-console_dirb.txt
+START_TIME: Fri Nov 20 15:55:54 2020
+URL_BASE: http://165.232.47.168:31866/server-status/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://165.232.47.168:31866/server-status/ ----
+(!) WARNING: All responses for this directory seem to be CODE = 403.
+    (Use mode '-w' if you want to scan it anyway)
+
+-----------------
+END_TIME: Fri Nov 20 15:55:59 2020
+DOWNLOADED: 101 - FOUND: 0
