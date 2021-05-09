@@ -15,27 +15,35 @@ main () {
     install_bat
     install_lsd
     install_python_modules
+    install_seclists
+    install_openvpn
     user_accessible
     cleanup
+    start_background_processes
 }
 
 upgrade () {
-    # update & upgrade all installed packages
+    echo "update apt repo"
     apt-get update
 
     # upgrade warns about:
     # change the home folder of irc
     # from /var/run/ircd to /run/ircd
     usermod -d /run/ircd irc
+
     # upgrade postgresql manually
     upgrade_postgresql
 
-    apt-get -y --no-show-upgraded upgrade 
+    echo "update & upgrade all installed packages"
+    apt-get -y --no-show-upgraded \
+        --asume-yes \
+        --allow-change-held-packages \
+        --allow-remove-essential \
+        upgrade
 }
 
 upgrade_postgresql () {
-    # obsolete postgress version 12
-    # manually upgrade to 13
+    echo "manually upgrade postgress to 13"
     apt-get install -y postgresql-13 postgresql-client-13 postgresql-doc-13
     pg_dropcluster --stop 13 main
     pg_upgradecluster 12 main
@@ -49,10 +57,12 @@ upgrade_postgresql () {
 }
 
 add_configs () {
-    # Clone dotfiles repo
+    echo "cloning and installing dotfiles repo"
+
     rm "$homedir/.bashrc" "$homedir/.zshrc"
-    git clone -b minimal --single-branch --bare https://github.com/Thewessen/dotfiles $homedir/dotfiles
+    git clone -b minimal --single-branch --bare https://github.com/Thewessen/dotfiles.git $homedir/dotfiles
     git --git-dir=$homedir/dotfiles --work-tree=$homedir checkout
+    # TODO: remove traces of dotfiles
     git init --separate-git-dir=$homedir/dotfiles $homedir
     cd $homedir
     git config status.showUntrackedFiles no
@@ -60,12 +70,12 @@ add_configs () {
 }
 
 add_zsh_theme () {
-    # powerlevel10k theme zsh
+    echo "installing powerlevel10k theme zsh"
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $homedir/powerlevel10k
 }
 
 install_fzf () {
-    # install fzf
+    echo "install fzf"
     git clone --depth 1 https://github.com/junegunn/fzf.git "$homedir/.fzf"
     "$homedir/.fzf/install" --all
     mv /root/.fzf.zsh $homedir
@@ -73,7 +83,7 @@ install_fzf () {
 }
 
 install_neovim () {
-    # build neovim from source
+    echo "build neovim from source"
     apt-get install --fix-missing -y ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip python2 python3-pip nodejs npm
     git clone https://github.com/neovim/neovim.git neovim
     cd neovim
@@ -95,23 +105,23 @@ install_neovim () {
 }
 
 install_rust () {
-    # install rust
+    echo "install rust"
     curl https://sh.rustup.rs -sSf | sh -s -- -y
     source ~/.cargo/env
 }
 
 install_bat () {
-    # install bat
+    echo "install bat"
     cargo install --locked bat
 }
 
 install_lsd () {
-    # install lsd
+    echo "install lsd"
     cargo install lsd
 }
 
 install_python_modules () {
-    # install apt dependencies
+    echo "install apt dependencies"
     curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
     python2 get-pip.py
     rm get-pip.py
@@ -119,16 +129,33 @@ install_python_modules () {
     python2 -m pip install virtualenv
 }
 
+install_seclists () {
+    echo "install common wordlists"
+    apt install -y seclists --fix-missing
+}
+
+install_openvpn () {
+    echo "install openvpn"
+    apt install -y openvpn --fix-missing
+}
+
 user_accessible () {
-    # make installed packages accesible by vagrant
-    mv /root/.cargo $homedir/
-    mv /root/.rustup $homedir/
+    echo "make installed packages accesible by vagrant"
+    mv -r /root/.cargo $homedir/
+    mv -r /root/.rustup $homedir/
     chown -R vagrant:vagrant $homedir
 }
 
 cleanup () {
+    echo "cleanup..."
     apt-get autoremove -y
     apt-get clean -y
+    #XXX: rm -rf $homedir/dotfiles
+}
+
+start_background_processes () {
+    echo "start background processes"
+    /usr/sbin/openvpn $homedir/openvpn/Umpalump.ovpn &
 }
 
 main "$@"

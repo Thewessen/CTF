@@ -24,5 +24,6 @@ Vagrant.configure('2') do |config|
     vb.name = 'kali'
   end
 
+  config.vm.provision "file", source: '/home/sthewessen/.openvpn', destination: '/home/vagrant/openvpn'
   config.vm.provision "shell", path: './provision.sh'
 end
