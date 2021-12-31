@@ -1,0 +1,12 @@
+# Nmap 7.80 scan initiated Fri May 14 02:47:37 2021 as: nmap -p 21 --script ftp-anon -vv -oN ./ftp-anon-script 10.10.124.137
+Nmap scan report for 10.10.124.137
+Host is up, received syn-ack (0.042s latency).
+Scanned at 2021-05-14 02:47:37 EDT for 30s
+
+PORT   STATE SERVICE REASON
+21/tcp open  ftp     syn-ack
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Fri May 14 02:48:07 2021 -- 1 IP address (1 host up) scanned in 30.56 seconds
