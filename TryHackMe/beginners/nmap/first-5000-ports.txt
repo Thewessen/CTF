@@ -1,0 +1,15 @@
+# Nmap 7.80 scan initiated Fri May 14 02:45:52 2021 as: nmap -oN ./first-5000-ports -Pn -vv -p 1-5000 10.10.124.137
+Nmap scan report for 10.10.124.137
+Host is up, received user-set (0.037s latency).
+Scanned at 2021-05-14 02:45:52 EDT for 15s
+Not shown: 4995 filtered ports
+Reason: 4995 no-responses
+PORT     STATE SERVICE       REASON
+21/tcp   open  ftp           syn-ack ttl 127
+53/tcp   open  domain        syn-ack ttl 127
+80/tcp   open  http          syn-ack ttl 127
+135/tcp  open  msrpc         syn-ack ttl 127
+3389/tcp open  ms-wbt-server syn-ack ttl 127
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Fri May 14 02:46:07 2021 -- 1 IP address (1 host up) scanned in 15.49 seconds

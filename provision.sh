@@ -19,7 +19,6 @@ main () {
     install_openvpn
     user_accessible
     cleanup
-    start_background_processes
 }
 
 upgrade () {
@@ -39,7 +38,10 @@ upgrade () {
         --asume-yes \
         --allow-change-held-packages \
         --allow-remove-essential \
-        upgrade
+        full-upgrade
+
+    echo "update searchsploit manually"
+    searchsploit --update
 }
 
 upgrade_postgresql () {
@@ -151,11 +153,6 @@ cleanup () {
     apt-get autoremove -y
     apt-get clean -y
     #XXX: rm -rf $homedir/dotfiles
-}
-
-start_background_processes () {
-    echo "start background processes"
-    /usr/sbin/openvpn $homedir/openvpn/Umpalump.ovpn &
 }
 
 main "$@"
