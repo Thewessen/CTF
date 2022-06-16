@@ -4,6 +4,9 @@
 # vim
 Session.vim
 
+# logs
+*.log
+
 # tools output
 skipfish/
 sqlmap/
@@ -23,3 +26,11 @@ tags.temp
 
 # vagrant
 **/.vagrant/
+
+# CTF
+flag
+flag.txt
+user
+user.txt
+root
+root.txt

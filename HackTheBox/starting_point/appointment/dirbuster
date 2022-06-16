@@ -1,0 +1,6 @@
+Found: http://10.129.218.116/images               (Status: 301) [Size: 317] [--> http://10.129.218.116/images/]
+Found: http://10.129.218.116/index.php            (Status: 200) [Size: 4896]
+Found: http://10.129.218.116/css                  (Status: 301) [Size: 314] [--> http://10.129.218.116/css/]
+Found: http://10.129.218.116/js                   (Status: 301) [Size: 313] [--> http://10.129.218.116/js/]
+Found: http://10.129.218.116/vendor               (Status: 301) [Size: 317] [--> http://10.129.218.116/vendor/]
+Found: http://10.129.218.116/fonts                (Status: 301) [Size: 316] [--> http://10.129.218.116/fonts/]

@@ -1,0 +1,14 @@
+# Nmap 7.92 scan initiated Sun Jun 12 09:21:19 2022 as: nmap -oN port-80 -A -v -p 80 10.129.1.27
+Nmap scan report for 10.129.1.27
+Host is up (0.024s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    nginx 1.14.2
+|_http-title: Did not follow redirect to http://ignition.htb/
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+|_http-server-header: nginx/1.14.2
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jun 12 09:21:40 2022 -- 1 IP address (1 host up) scanned in 21.68 seconds

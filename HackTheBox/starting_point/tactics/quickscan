@@ -1,0 +1,11 @@
+# Nmap 7.92 scan initiated Sun Jun 12 14:58:59 2022 as: nmap -oN quickscan -T5 -Pn -v -p- 10.129.250.78
+Nmap scan report for 10.129.250.78
+Host is up (0.027s latency).
+Not shown: 65532 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+135/tcp open  msrpc
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Sun Jun 12 15:00:19 2022 -- 1 IP address (1 host up) scanned in 80.23 seconds

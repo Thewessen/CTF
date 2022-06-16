@@ -1,0 +1,7 @@
+Found: http://10.129.48.180/images               (Status: 301) [Size: 315] [--> http://10.129.48.180/images/]
+Found: http://10.129.48.180/index.php            (Status: 200) [Size: 10932]
+Found: http://10.129.48.180/themes               (Status: 301) [Size: 315] [--> http://10.129.48.180/themes/]
+Found: http://10.129.48.180/uploads              (Status: 301) [Size: 316] [--> http://10.129.48.180/uploads/]
+Found: http://10.129.48.180/css                  (Status: 301) [Size: 312] [--> http://10.129.48.180/css/]
+Found: http://10.129.48.180/js                   (Status: 301) [Size: 311] [--> http://10.129.48.180/js/]
+Found: http://10.129.48.180/fonts                (Status: 301) [Size: 314] [--> http://10.129.48.180/fonts/]

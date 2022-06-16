@@ -1,0 +1,18 @@
+# Nmap 7.92 scan initiated Wed Jun 15 19:53:23 2022 as: nmap -oN port-80 -A -v -p 80 10.129.53.81
+Nmap scan report for 10.129.53.81
+Host is up (0.046s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.4.41 ((Win64) OpenSSL/1.1.1c PHP/7.2.28)
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: MegaShopping
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.41 (Win64) OpenSSL/1.1.1c PHP/7.2.28
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jun 15 19:53:33 2022 -- 1 IP address (1 host up) scanned in 9.81 seconds

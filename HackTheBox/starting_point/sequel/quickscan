@@ -1,0 +1,9 @@
+# Nmap 7.92 scan initiated Sat Jun 11 21:57:40 2022 as: nmap -oN quickscan -v -p- 10.129.66.227
+Nmap scan report for 10.129.66.227
+Host is up (0.029s latency).
+Not shown: 65534 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+3306/tcp open  mysql
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Sat Jun 11 21:58:18 2022 -- 1 IP address (1 host up) scanned in 37.74 seconds

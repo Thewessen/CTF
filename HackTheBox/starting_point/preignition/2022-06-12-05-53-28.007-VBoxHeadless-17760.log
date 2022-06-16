@@ -1,0 +1,12 @@
+Log created: 2022-06-12T05:53:28.076953000Z
+Process ID:  17760 (0x4560)
+Parent PID:  1 (0x1)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: kali
+Arg[3]: --startvm
+Arg[4]: ddce0ca9-05c9-4df2-9d9c-aa1283c7f028
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2

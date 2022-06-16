@@ -1,0 +1,6 @@
+back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
+Database: appdb
+[1 table]
++-------+
+| users |
++-------+

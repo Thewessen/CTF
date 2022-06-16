@@ -1,0 +1,10 @@
+# Nmap 7.92 scan initiated Sat Jun 11 10:46:42 2022 as: nmap -oN ./basic-scan -vvv -Pn -p- 10.129.132.247
+Nmap scan report for 10.129.132.247
+Host is up, received user-set (0.030s latency).
+Scanned at 2022-06-11 10:46:45 CEST for 16s
+Not shown: 65534 closed tcp ports (conn-refused)
+PORT   STATE SERVICE REASON
+80/tcp open  http    syn-ack
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Sat Jun 11 10:47:02 2022 -- 1 IP address (1 host up) scanned in 19.19 seconds
