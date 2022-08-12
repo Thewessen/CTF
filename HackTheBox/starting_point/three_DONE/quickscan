@@ -1,0 +1,1 @@
+# Nmap 7.92 scan initiated Sun Aug  7 01:46:15 2022 as: nmap -oN quickscan -v -A -p- 10.129.227.248

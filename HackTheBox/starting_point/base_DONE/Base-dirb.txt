@@ -1,0 +1,21 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: Base-dirb.txt
+START_TIME: Thu Aug 11 01:57:22 2022
+URL_BASE: http://10.129.95.184/
+WORDLIST_FILES: /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+COOKIE: PHPSESSID=8tgrljrcjr3rletver391qbn1p
+OPTION: Interactive Recursion
+
+-----------------
+
+GENERATED WORDS: 87568
+
+---- Scanning URL: http://10.129.95.184/ ----
+==> DIRECTORY: http://10.129.95.184/login/
+==> DIRECTORY: http://10.129.95.184/assets/
+==> DIRECTORY: http://10.129.95.184/forms/

@@ -1,0 +1,33 @@
+# Nmap 7.92 scan initiated Wed Aug 10 01:55:34 2022 as: nmap -oN quickscan -v -F -A 10.129.95.184
+Increasing send delay for 10.129.95.184 from 0 to 5 due to 13 out of 43 dropped probes since last increase.
+Nmap scan report for 10.129.95.184
+Host is up (0.089s latency).
+Not shown: 98 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 f6:5c:9b:38:ec:a7:5c:79:1c:1f:18:1c:52:46:f7:0b (RSA)
+|   256 65:0c:f7:db:42:03:46:07:f2:12:89:fe:11:20:2c:53 (ECDSA)
+|_  256 b8:65:cd:3f:34:d8:02:6a:e3:18:23:3e:77:dd:87:40 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: GET POST OPTIONS HEAD
+|_http-favicon: Unknown favicon MD5: FED84E16B6CCFE88EE7FFAAE5DFEFD34
+|_http-title: Welcome to Base
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+Aggressive OS guesses: Linux 5.4 (95%), Linux 5.0 - 5.4 (94%), Linux 5.0 (94%), HP P2000 G3 NAS device (93%), Linux 4.15 - 5.6 (93%), Linux 5.3 - 5.4 (93%), Linux 2.6.32 (92%), Linux 2.6.32 - 3.1 (92%), Ubiquiti AirMax NanoStation WAP (Linux 2.6.32) (92%), Linux 3.7 (92%)
+No exact OS matches for host (test conditions non-ideal).
+Uptime guess: 44.558 days (since Sun Jun 26 12:32:57 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=256 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 993/tcp)
+HOP RTT       ADDRESS
+1   277.88 ms 10.10.14.1
+2   278.80 ms 10.129.95.184
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Aug 10 01:55:54 2022 -- 1 IP address (1 host up) scanned in 19.67 seconds
